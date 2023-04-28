@@ -1,6 +1,7 @@
-Sub Preencher_Dados() 'Versão 2.3
+Sub Preencher_Dados() 'Versão 2.4
 
-
+    Msgbox "Berola, só que agora na versão 2.4"
+    Exit Sub
 
 If Range("Label_NomeLT").Locked = True Then
     MsgBox "Os dados já foram preenchidos!"
