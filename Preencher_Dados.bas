@@ -1131,7 +1131,7 @@ Windows(LC_NomeLC).Activate
             LC_NumSubcondutores = "{VARIÁVEL}"
         End If
 
-
+'top demais
 
 End Sub
 
