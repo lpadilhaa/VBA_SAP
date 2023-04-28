@@ -1,6 +1,6 @@
-Sub Preencher_Dados() 'Versão 2.2
+Sub Preencher_Dados() 'Versão 2.3
 
-    Msgbox "Berola, versão 2.2"
+    Msgbox "Tu continua berola, só que agora na versão 2.3 kkkkkkkkkkkk"
     Exit Sub
 
 If Range("Label_NomeLT").Locked = True Then
