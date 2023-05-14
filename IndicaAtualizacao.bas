@@ -1,1 +1,1 @@
-Atualiza=1
+Atualizar=1
