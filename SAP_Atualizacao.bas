@@ -1,5 +1,8 @@
 Sub Atualizar_SAP() '//NUNCA ALTERAR O NOME DA SUB
 
-    Exit Sub
 
+	Sheets("BASE_Tracoes").Visible = xlSheetVeryHidden
+	Sheets("Dados_Aux").Visible = xlSheetVeryHidden
+    'Exit Sub
+	
 End Sub
