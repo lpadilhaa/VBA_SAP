@@ -1398,11 +1398,11 @@ Windows(WBTemp).Activate
     Application.CutCopyMode = False
 
 Windows(WBTemp).Activate
-    Range("F1").Formula2R1C1 = _
+    Range("F1").Formula = _
         "=TEXT(LEFT(SUBSTITUTE(RC[-4],""-"",""||"",LEN(RC[-4])-LEN(SUBSTITUTE(RC[-4],""-"",""""))),FIND(""||"",SUBSTITUTE(RC[-4],""-"",""||"",LEN(RC[-4])-LEN(SUBSTITUTE(RC[-4],""-"",""""))))-1),""0000000"")&""-FL.""&SUBSTITUTE(TEXT(TEXTJOIN("""",TRUE,IFERROR(MID(RC[-3],ROW(INDIRECT(""1:100"")),1)+0,"""")),""000""),TEXTJOIN("""",TRUE,IFERROR(MID(RC[-3],ROW(INDIRECT(""1:100"")" & _
         "),1)+0,"""")),RC[-3])&""/""&RIGHT(SUBSTITUTE(RC[-4],""-"",""||"",LEN(RC[-4])-LEN(SUBSTITUTE(RC[-4],""-"",""""))),LEN(SUBSTITUTE(RC[-4],""-"",""||"",LEN(RC[-4])-LEN(SUBSTITUTE(RC[-4],""-"",""""))))-FIND(""||"",SUBSTITUTE(RC[-4],""-"",""||"",LEN(RC[-4])-LEN(SUBSTITUTE(RC[-4],""-"",""""))))-1)" & _
         ""
-    Range("G1").Formula2R1C1 = _
+    Range("G1").Formula = _
         "=TEXT(LEFT(SUBSTITUTE(RC[-3],""-"",""||"",LEN(RC[-3])-LEN(SUBSTITUTE(RC[-3],""-"",""""))),FIND(""||"",SUBSTITUTE(RC[-3],""-"",""||"",LEN(RC[-3])-LEN(SUBSTITUTE(RC[-3],""-"",""""))))-1),""0000000"")&""-FL.""&SUBSTITUTE(TEXT(TEXTJOIN("""",TRUE,IFERROR(MID(RC[-2],ROW(INDIRECT(""1:100"")),1)+0,"""")),""000""),TEXTJOIN("""",TRUE,IFERROR(MID(RC[-2],ROW(INDIRECT(""1:100"")" & _
         "),1)+0,"""")),RC[-2])&""/""&RIGHT(SUBSTITUTE(RC[-3],""-"",""||"",LEN(RC[-3])-LEN(SUBSTITUTE(RC[-3],""-"",""""))),LEN(SUBSTITUTE(RC[-3],""-"",""||"",LEN(RC[-3])-LEN(SUBSTITUTE(RC[-3],""-"",""""))))-FIND(""||"",SUBSTITUTE(RC[-3],""-"",""||"",LEN(RC[-3])-LEN(SUBSTITUTE(RC[-3],""-"",""""))))-1)" & _
         ""
