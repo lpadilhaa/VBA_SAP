@@ -5,11 +5,12 @@ Sub Atualizar_SAP() '//NUNCA ALTERAR O NOME DA SUB
 	'Exit sub
 
 		
-        newCode1 = GetGitHubFileContent("lpadilhaa", "VBA_SAP", "main", "a_PreecherDados.bas", "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")
+        newCode1 = GetGitHubFileContent("lpadilhaa", "VBA_SAP", "main", "a_PreecherDados.bas")
                     ThisWorkbook.VBProject.VBComponents("a_PreecherDados").CodeModule.DeleteLines 1, ThisWorkbook.VBProject.VBComponents("a_PreecherDados").CodeModule.CountOfLines
                     ThisWorkbook.VBProject.VBComponents("a_PreecherDados").CodeModule.InsertLines 1, newCode1
 	
-	
+	If Range("Label_NomeLT").locked = true Then
+		
 	Sheets("zeq_cadeia_isol").Unprotect (StrConv(Base64Decode("UGFkaWxoYUgyTSo="), vbUnicode))
 	
 	On Error Resume Next
@@ -19,5 +20,6 @@ Sub Atualizar_SAP() '//NUNCA ALTERAR O NOME DA SUB
 
 	Sheets("zeq_cadeia_isol").Protect DrawingObjects:=True, Contents:=True, Scenarios:=True, AllowFiltering:=False, Password:=StrConv(Base64Decode("UGFkaWxoYUgyTSo="), vbUnicode)
 	
+	End if
 
 End Sub
