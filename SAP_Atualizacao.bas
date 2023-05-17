@@ -20,7 +20,7 @@ Sub Atualizar_SAP() '//NUNCA ALTERAR O NOME DA SUB
     Sheets("zeq_servidao").Unprotect (StrConv(Base64Decode("UGFkaWxoYUgyTSo="), vbUnicode))
     
     On Error Resume Next
-        Range("Tab_zeq_servidao[OBSERVAÇÃO]").Replace What:="0", Replacement:=vbNullString, LookAt:=xlWhole 'v1.5
+        Range("Tab_zeq_servidao[OBSERVAÇÃO]").Replace What:="0", Replacement:="-", LookAt:=xlWhole 'v1.5
     On Error GoTo -1
     On Error GoTo 0
 
