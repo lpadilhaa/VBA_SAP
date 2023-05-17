@@ -5,7 +5,7 @@ Sub Atualizar_SAP() '//NUNCA ALTERAR O NOME DA SUB
 	'Exit sub
 
 		
-        newCode1 = GetGitHubFileContent("lpadilhaa", "VBA_SAP", "main", "a_PreecherDados.bas")
+        newCode1 = GetGitHubFileContent("lpadilhaa", "VBA_SAP", "main", "a_PreencherDados.bas")
                     ThisWorkbook.VBProject.VBComponents("a_PreecherDados").CodeModule.DeleteLines 1, ThisWorkbook.VBProject.VBComponents("a_PreecherDados").CodeModule.CountOfLines
                     ThisWorkbook.VBProject.VBComponents("a_PreecherDados").CodeModule.InsertLines 1, newCode1
 	
