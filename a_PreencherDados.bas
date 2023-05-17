@@ -1881,7 +1881,7 @@ Workbooks(BaseVBA_SAP).Activate
         Range("Tab_zeq_servidao[OBSERVAÇÃO]").Value = Range("Tab_zeq_servidao[OBSERVAÇÃO]").Value
 
         On Error Resume Next
-            Range("Tab_zeq_servidao[OBSERVAÇÃO]").Replace What:="0", Replacement:=vbNullString, LookAt:=xlWhole 'v1.5
+            Range("Tab_zeq_servidao[OBSERVAÇÃO]").Replace What:="0", Replacement:="-", LookAt:=xlWhole 'v1.5
         On Error GoTo -1
         On Error GoTo 0
 
