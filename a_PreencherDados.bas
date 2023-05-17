@@ -405,10 +405,10 @@ End If
     If BDIT_Version = 5 Then
         Qtde_SerieEst = Application.WorksheetFunction.CountA(Range("Tab_SerieEstrut[Nome Estrutura]"))
         Qtde_Torres = Application.WorksheetFunction.Sum(Range("Tab_SerieEstrut[Qtde. Total na LT]"))
+        Qtde_SerieEstCircuito = Application.WorksheetFunction.CountA(Range("Tab_SerieEstrutC1[Nome Estrutura]")) '/Corrigido na v1.6
             If Qtde_SerieEst <> Qtde_SerieEstCircuito Then
                 GoTo ErroBDIT
             End If
-        Qtde_SerieEstCircuito = Application.WorksheetFunction.CountA(Range("Tab_SerieEstrutC1[Nome Estrutura]"))
         Qtde_EstruturasTabTorres = Application.WorksheetFunction.CountA(Range("Tab_Torres[Nome LT]"))
         Projeto = Range("Label_IDProjeto").Value
         BDIT_CodLT = Range("Label_CodAtivoConcessionaria")
@@ -1087,7 +1087,7 @@ Sheets("zeq_aterramento").Activate
 Range("A1").Activate
 Sheets("Menu").Activate
 
-Sheets("zeq_aterramento").Protect DrawingObjects:=True, Contents:=True, Scenarios:=True, AllowFiltering:=False, Password:=StrConv(Base64Decode("UGFkaWxoYUgyTSo="), vbUnicode)
+Sheets("zeq_aterramento").Protect DrawingObjects:=True, Contents:=True, Scenarios:=True, AllowFiltering:=True, Password:=StrConv(Base64Decode("UGFkaWxoYUgyTSo="), vbUnicode)
 
 
 
@@ -1117,7 +1117,7 @@ Sheets("zeq_acessos").Activate
 Range("A1").Activate
 Sheets("Menu").Activate
 
-Sheets("zeq_acessos").Protect DrawingObjects:=True, Contents:=True, Scenarios:=True, AllowFiltering:=False, Password:=StrConv(Base64Decode("UGFkaWxoYUgyTSo="), vbUnicode)
+Sheets("zeq_acessos").Protect DrawingObjects:=True, Contents:=True, Scenarios:=True, AllowFiltering:=True, Password:=StrConv(Base64Decode("UGFkaWxoYUgyTSo="), vbUnicode)
 
 
 
@@ -1540,7 +1540,7 @@ Sheets("Menu").Activate
             End If
         Next cel
 
-        Sheets("zeq_condutor").Protect DrawingObjects:=True, Contents:=True, Scenarios:=True, AllowFiltering:=False, Password:=StrConv(Base64Decode("UGFkaWxoYUgyTSo="), vbUnicode)
+        Sheets("zeq_condutor").Protect DrawingObjects:=True, Contents:=True, Scenarios:=True, AllowFiltering:=True, Password:=StrConv(Base64Decode("UGFkaWxoYUgyTSo="), vbUnicode)
 
 
     Sheets("zeq_pararaio").Range("Tab_zeq_pararaio[TIPO DE ARRANJO DO CABO]").FormulaR1C1 = _
@@ -1665,7 +1665,7 @@ Workbooks(BaseVBA_SAP).Activate
 
         Range("Tab_zeq_estru_geral[ALTURA MISULA (m)], Tab_zeq_estru_geral[ALTURA TOTAL (m)], Tab_zeq_estru_geral[DISPOSIÇÃO DAS FASES], Tab_zeq_estru_geral[VÃO DE PESO (m)]").Locked = True
         
-        Sheets("zeq_estru_geral").Protect DrawingObjects:=True, Contents:=True, Scenarios:=True, AllowFiltering:=False, Password:=StrConv(Base64Decode("UGFkaWxoYUgyTSo="), vbUnicode)
+        Sheets("zeq_estru_geral").Protect DrawingObjects:=True, Contents:=True, Scenarios:=True, AllowFiltering:=True, Password:=StrConv(Base64Decode("UGFkaWxoYUgyTSo="), vbUnicode)
 
 
 
@@ -1681,7 +1681,7 @@ Workbooks(BaseVBA_SAP).Activate
 
         Range("Tab_zeq_estru_autop_estai[DESENHO FUNDAÇÃO PÉ]").Locked = True
         
-        Sheets("zeq_estru_autop&estai").Protect DrawingObjects:=True, Contents:=True, Scenarios:=True, AllowFiltering:=False, Password:=StrConv(Base64Decode("UGFkaWxoYUgyTSo="), vbUnicode)
+        Sheets("zeq_estru_autop&estai").Protect DrawingObjects:=True, Contents:=True, Scenarios:=True, AllowFiltering:=True, Password:=StrConv(Base64Decode("UGFkaWxoYUgyTSo="), vbUnicode)
 
 
 
@@ -1769,7 +1769,7 @@ Workbooks(BaseVBA_SAP).Activate
         Range("Tab_zeq_cadeia_isol[DESENHO DO ARRANJO], Tab_zeq_cadeia_isol[DESENHO DO ISOLADOR], Tab_zeq_cadeia_isol[MATERIAL DO ISOLADOR], Tab_zeq_cadeia_isol[COMPRIMENTO DA CADEIA (m)]").Locked = True
         Range("Tab_zeq_cadeia_isol[QUANTIDADE TOTAL ISOL ARRANJO], Tab_zeq_cadeia_isol[TIPO DE ARRANJO DA CADEIA], Tab_zeq_cadeia_isol[COMPOSIÇÃO DO ARRANJO]").Locked = True
         
-        Sheets("zeq_cadeia_isol").Protect DrawingObjects:=True, Contents:=True, Scenarios:=True, AllowFiltering:=False, Password:=StrConv(Base64Decode("UGFkaWxoYUgyTSo="), vbUnicode)
+        Sheets("zeq_cadeia_isol").Protect DrawingObjects:=True, Contents:=True, Scenarios:=True, AllowFiltering:=True, Password:=StrConv(Base64Decode("UGFkaWxoYUgyTSo="), vbUnicode)
 
         Application.DisplayAlerts = False
         Workbooks(PlanTemp).Close
@@ -1814,6 +1814,10 @@ Workbooks(BaseVBA_SAP).Activate
 Workbooks(BaseVBA_SAP).Activate
     Sheets("zeq_pararaio").Activate
         Range("Tab_zeq_pararaio[DESENHO DO ARRANJO]").PasteSpecial Paste:=xlPasteValues
+        On Error Resume Next
+            Range("Tab_zeq_pararaio[DESENHO DO ARRANJO]").Replace What:="0", Replacement:=vbNullString, LookAt:=xlWhole 'v1.6
+        On Error GoTo -1
+        On Error GoTo 0
 
 Workbooks(PlanTemp).Activate
         Range("TabInfoBaseAux[Coluna6]").Copy
@@ -1825,7 +1829,7 @@ Workbooks(BaseVBA_SAP).Activate
         Range("A1").Select
         Range("Tab_zeq_pararaio[DESENHO DO ARRANJO], Tab_zeq_pararaio[PARA-RAIO ISOLADOS]").Locked = True
         
-        Sheets("zeq_pararaio").Protect DrawingObjects:=True, Contents:=True, Scenarios:=True, AllowFiltering:=False, Password:=StrConv(Base64Decode("UGFkaWxoYUgyTSo="), vbUnicode)
+        Sheets("zeq_pararaio").Protect DrawingObjects:=True, Contents:=True, Scenarios:=True, AllowFiltering:=True, Password:=StrConv(Base64Decode("UGFkaWxoYUgyTSo="), vbUnicode)
 
 
 Workbooks(PlanTemp).Activate
@@ -1847,7 +1851,7 @@ Workbooks(BaseVBA_SAP).Activate
         Range("A1").Select
         Range("Tab_zeq_opgw[CAIXA DE EMENDA]").Locked = True
         
-        Sheets("zeq_opgw").Protect DrawingObjects:=True, Contents:=True, Scenarios:=True, AllowFiltering:=False, Password:=StrConv(Base64Decode("UGFkaWxoYUgyTSo="), vbUnicode)
+        Sheets("zeq_opgw").Protect DrawingObjects:=True, Contents:=True, Scenarios:=True, AllowFiltering:=True, Password:=StrConv(Base64Decode("UGFkaWxoYUgyTSo="), vbUnicode)
         
         Application.DisplayAlerts = False
         Workbooks(PlanTemp).Close
@@ -1888,7 +1892,7 @@ Workbooks(BaseVBA_SAP).Activate
 
         Range("Tab_zeq_servidao[DIST VERTIC CABO-TRAVESSIA (m)], Tab_zeq_servidao[OBSERVAÇÃO]").Locked = True
         
-        Sheets("zeq_servidao").Protect DrawingObjects:=True, Contents:=True, Scenarios:=True, AllowFiltering:=False, Password:=StrConv(Base64Decode("UGFkaWxoYUgyTSo="), vbUnicode)
+        Sheets("zeq_servidao").Protect DrawingObjects:=True, Contents:=True, Scenarios:=True, AllowFiltering:=True, Password:=StrConv(Base64Decode("UGFkaWxoYUgyTSo="), vbUnicode)
 
 
         Application.DisplayAlerts = False
@@ -1987,6 +1991,8 @@ Application.ScreenUpdating = True
 
 
 End Sub
+
+
 
 
 
