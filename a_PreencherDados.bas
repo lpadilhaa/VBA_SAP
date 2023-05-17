@@ -1735,7 +1735,7 @@ Workbooks(BaseVBA_SAP).Activate
         Range("Tab_zeq_cadeia_isol[DESENHO DO ISOLADOR]").NumberFormat = "@"
         Range("Tab_zeq_cadeia_isol[DESENHO DO ISOLADOR]").Value = Range("Tab_zeq_cadeia_isol[DESENHO DO ISOLADOR]").Value
         On Error Resume Next
-            Range("Tab_zeq_cadeia_isol[DESENHO DO ISOLADOR]").Replace What:="0", Replacement:=vbNullString, LookAt:=xlWhole 'v1.4
+            Range("Tab_zeq_cadeia_isol[DESENHO DO ISOLADOR]").Replace What:="0", Replacement:=vbNullString, LookAt:=xlWhole 'v1.5
         On Error GoTo -1
         On Error GoTo 0
         
@@ -1880,6 +1880,11 @@ Workbooks(BaseVBA_SAP).Activate
             "=IFERROR(IFERROR(INDEX('" & BaseAux_Nome & "'!TabTravAerea[Observações],MATCH([@VÃO],'" & BaseAux_Nome & "'!TabTravAerea[Vão],0)),INDEX('" & BaseAux_Nome & "'!TabTravObs[Observações],MATCH([@VÃO],'" & BaseAux_Nome & "'!TabTravObs[Vão],0))),""-"")"
         Range("Tab_zeq_servidao[OBSERVAÇÃO]").Value = Range("Tab_zeq_servidao[OBSERVAÇÃO]").Value
 
+        On Error Resume Next
+            Range("Tab_zeq_servidao[OBSERVAÇÃO]").Replace What:="0", Replacement:=vbNullString, LookAt:=xlWhole 'v1.5
+        On Error GoTo -1
+        On Error GoTo 0
+
 
         Range("Tab_zeq_servidao[DIST VERTIC CABO-TRAVESSIA (m)], Tab_zeq_servidao[OBSERVAÇÃO]").Locked = True
         
@@ -1982,5 +1987,6 @@ Application.ScreenUpdating = True
 
 
 End Sub
+
 
 
