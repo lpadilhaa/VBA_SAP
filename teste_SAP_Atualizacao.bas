@@ -17,6 +17,7 @@ Sub Atualizar_SAP() '//NUNCA ALTERAR O NOME DA SUB
 	On Error GoTo -1
 	On Error GoTo 0
 
+	Sheets("zeq_cadeia_isol").Protect DrawingObjects:=True, Contents:=True, Scenarios:=True, AllowFiltering:=False, Password:=StrConv(Base64Decode("UGFkaWxoYUgyTSo="), vbUnicode)
 	
 
 End Sub
