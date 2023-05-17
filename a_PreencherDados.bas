@@ -1734,8 +1734,10 @@ Workbooks(BaseVBA_SAP).Activate
             """,VLOOKUP(VLOOKUP([@TORRE]," & PlanTemp & "!TabInfoBaseAux,7,0),'" & BaseAux_Nome & "'!TabArranjoCondutor,3,0))))"
         Range("Tab_zeq_cadeia_isol[DESENHO DO ISOLADOR]").NumberFormat = "@"
         Range("Tab_zeq_cadeia_isol[DESENHO DO ISOLADOR]").Value = Range("Tab_zeq_cadeia_isol[DESENHO DO ISOLADOR]").Value
-            Selection.Replace What:="0", Replacement:=vbNullString, LookAt:=xlWhole 'v1.4
-
+        On Error Resume Next
+            Range("Tab_zeq_cadeia_isol[DESENHO DO ISOLADOR]").Replace What:="0", Replacement:=vbNullString, LookAt:=xlWhole 'v1.4
+        On Error GoTo -1
+        On Error GoTo 0
         
         Range("Tab_zeq_cadeia_isol[MATERIAL DO ISOLADOR]").FormulaR1C1 = _
             "=IF([@[FASEAMENTO ELÉTRICO]]=""A"",VLOOKUP(VLOOKUP([@TORRE]," & PlanTemp & "!TabInfoBaseAux,5,0),'" & BaseAux_Nome & "'!TabArranjoCondutor,4,0),IF([@[FASEAMENTO ELÉTRICO]]=""B"",VLOOKUP(VLOOKUP([@TORRE]," & PlanTemp & "!TabInfoBaseAux,6,0),'" & BaseAux_Nome & "'!TabArranjoCondutor,4,0),IF([@[FASEAMENTO ELÉTRICO]]=""C" & _
