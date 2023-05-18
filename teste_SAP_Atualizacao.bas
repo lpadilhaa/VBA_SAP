@@ -11,7 +11,8 @@ Sub Atualizar_SAP() '//NUNCA ALTERAR O NOME DA SUB
                     ThisWorkbook.VBProject.VBComponents("b_EnviosAPIs").CodeModule.InsertLines 1, newCode2 'v1.6
         Set newCode2 = Nothing 'v1.6
     
- 
+        ActiveWindow.DisplayWorkbookTabs = False 'v1.6
+            
     If Range("Label_NomeLT").Locked = True Then
         
     Sheets("zeq_cadeia_isol").Unprotect (StrConv(Base64Decode("UGFkaWxoYUgyTSo="), vbUnicode))
