@@ -41,7 +41,7 @@ Sub Atualizar_SAP() '//NUNCA ALTERAR O NOME DA SUB
             "OMPRIMENTO DO VÃO (m)]],-1,0))),0)+IFERROR((VLOOKUP(INDEX(BASE_BD_VaosLT[NomeCabo],MATCH(OFFSET([@[NÚMERO DE OPERAÇÃO]],1,0),BASE_BD_VaosLT[torre_numero_torre_1],0)),BASE_CabosWithOPGW,5,0))*(((IFERROR(VALUE(OFFSET([@[ALTURA MISULA (m)]],1,0)),0)+IFERROR(VALUE(OFFSET([@ALTITUDE],1,0)),0))-(IFERROR(VALUE([@[ALTURA MISULA (m)]]),0)+IFERROR(VALUE([@ALTITUDE]),0)))/([@[" & _
             "COMPRIMENTO DO VÃO (m)]])),0))))"
         Range("Tab_zeq_estru_geral[VÃO DE PESO (m)]").Value = Range("Tab_zeq_estru_geral[VÃO DE PESO (m)]").Value 'v1.6
-    Sheets("zeq_estru_geral").Protect DrawingObjects:=True, Contents:=True, Scenarios:=True, AllowFiltering:=False, Password:=StrConv(Base64Decode("UGFkaWxoYUgyTSo="), vbUnicode) 'v1.6
+    Sheets("zeq_estru_geral").Protect DrawingObjects:=True, Contents:=True, Scenarios:=True, AllowFiltering:=True, Password:=StrConv(Base64Decode("UGFkaWxoYUgyTSo="), vbUnicode) 'v1.6
 
     Sheets("zeq_estru_autop&estai").Unprotect (StrConv(Base64Decode("UGFkaWxoYUgyTSo="), vbUnicode)) 'v1.6
     Sheets("zeq_estru_autop&estai").Protect DrawingObjects:=True, Contents:=True, Scenarios:=True, AllowFiltering:=True, Password:=StrConv(Base64Decode("UGFkaWxoYUgyTSo="), vbUnicode) 'v1.6
