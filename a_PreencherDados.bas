@@ -265,7 +265,7 @@ End If
 End If
 
 If LC_Extensao <> Range("BASE_BD_ProjetosLT[extensao_total_linha]").Rows(1).Value Then
-    MsgBox Range("BASE_BD_ProjetosLT[extensao_total_linha]").Rows(1).Value
+    
     Dim Extensao_Errada As VbMsgBoxResult
         Extensao_Errada = MsgBox("A somatória de vãos da lista de construção não coincide com a extensão total da linha registrada no banco de dados. " _
         & Chr(13) & Chr(13) & _
@@ -1398,14 +1398,14 @@ Windows(WBTemp).Activate
     Application.CutCopyMode = False
 
 Windows(WBTemp).Activate
-    Range("F1").Formula = _
-        "=TEXT(LEFT(SUBSTITUTE(RC[-4],""-"",""||"",LEN(RC[-4])-LEN(SUBSTITUTE(RC[-4],""-"",""""))),FIND(""||"",SUBSTITUTE(RC[-4],""-"",""||"",LEN(RC[-4])-LEN(SUBSTITUTE(RC[-4],""-"",""""))))-1),""0000000"")&""-FL.""&SUBSTITUTE(TEXT(TEXTJOIN("""",TRUE,IFERROR(MID(RC[-3],ROW(INDIRECT(""1:100"")),1)+0,"""")),""000""),TEXTJOIN("""",TRUE,IFERROR(MID(RC[-3],ROW(INDIRECT(""1:100"")" & _
-        "),1)+0,"""")),RC[-3])&""/""&RIGHT(SUBSTITUTE(RC[-4],""-"",""||"",LEN(RC[-4])-LEN(SUBSTITUTE(RC[-4],""-"",""""))),LEN(SUBSTITUTE(RC[-4],""-"",""||"",LEN(RC[-4])-LEN(SUBSTITUTE(RC[-4],""-"",""""))))-FIND(""||"",SUBSTITUTE(RC[-4],""-"",""||"",LEN(RC[-4])-LEN(SUBSTITUTE(RC[-4],""-"",""""))))-1)" & _
-        ""
-    Range("G1").Formula = _
-        "=TEXT(LEFT(SUBSTITUTE(RC[-3],""-"",""||"",LEN(RC[-3])-LEN(SUBSTITUTE(RC[-3],""-"",""""))),FIND(""||"",SUBSTITUTE(RC[-3],""-"",""||"",LEN(RC[-3])-LEN(SUBSTITUTE(RC[-3],""-"",""""))))-1),""0000000"")&""-FL.""&SUBSTITUTE(TEXT(TEXTJOIN("""",TRUE,IFERROR(MID(RC[-2],ROW(INDIRECT(""1:100"")),1)+0,"""")),""000""),TEXTJOIN("""",TRUE,IFERROR(MID(RC[-2],ROW(INDIRECT(""1:100"")" & _
-        "),1)+0,"""")),RC[-2])&""/""&RIGHT(SUBSTITUTE(RC[-3],""-"",""||"",LEN(RC[-3])-LEN(SUBSTITUTE(RC[-3],""-"",""""))),LEN(SUBSTITUTE(RC[-3],""-"",""||"",LEN(RC[-3])-LEN(SUBSTITUTE(RC[-3],""-"",""""))))-FIND(""||"",SUBSTITUTE(RC[-3],""-"",""||"",LEN(RC[-3])-LEN(SUBSTITUTE(RC[-3],""-"",""""))))-1)" & _
-        ""
+    Range("F1").FormulaR1C1 = _
+        "=IF(OR(RC[-4]="""",RC[-4]=""-""),RC[-4],IF(ISNUMBER(VALUE(LEFT(SUBSTITUTE(RC[-4],""-"",""||"",LEN(RC[-4])-LEN(SUBSTITUTE(RC[-4],""-"",""""))),FIND(""||"",SUBSTITUTE(RC[-4],""-"",""||"",LEN(RC[-4])-LEN(SUBSTITUTE(RC[-4],""-"",""""))))-1))),TEXT(LEFT(SUBSTITUTE(RC[-4],""-"",""||"",LEN(RC[-4])-LEN(SUBSTITUTE(RC[-4],""-"",""""))),FIND(""||"",SUBSTITUTE(RC[-4],""-"",""||" & _
+        """,LEN(RC[-4])-LEN(SUBSTITUTE(RC[-4],""-"",""""))))-1),""0000000"")&""-FL.""&SUBSTITUTE(TEXT(TEXTJOIN("""",TRUE,IFERROR(MID(RC[-3],@ROW(INDIRECT(""1:100"")),1)+0,"""")),""000""),TEXTJOIN("""",TRUE,IFERROR(MID(RC[-3],@ROW(INDIRECT(""1:100"")),1)+0,"""")),RC[-3])&""/""&RIGHT(SUBSTITUTE(RC[-4],""-"",""||"",LEN(RC[-4])-LEN(SUBSTITUTE(RC[-4],""-"",""""))),LEN(SUBSTITUTE(" & _
+        "RC[-4],""-"",""||"",LEN(RC[-4])-LEN(SUBSTITUTE(RC[-4],""-"",""""))))-FIND(""||"",SUBSTITUTE(RC[-4],""-"",""||"",LEN(RC[-4])-LEN(SUBSTITUTE(RC[-4],""-"",""""))))-1),RC[-4]&""-FL.""&RC[-3]))"
+    Range("G1").FormulaR1C1 = _
+        "=IF(OR(RC[-3]="""",RC[-3]=""-""),RC[-3],IF(ISNUMBER(VALUE(LEFT(SUBSTITUTE(RC[-3],""-"",""||"",LEN(RC[-3])-LEN(SUBSTITUTE(RC[-3],""-"",""""))),FIND(""||"",SUBSTITUTE(RC[-3],""-"",""||"",LEN(RC[-3])-LEN(SUBSTITUTE(RC[-3],""-"",""""))))-1))),TEXT(LEFT(SUBSTITUTE(RC[-3],""-"",""||"",LEN(RC[-3])-LEN(SUBSTITUTE(RC[-3],""-"",""""))),FIND(""||"",SUBSTITUTE(RC[-3],""-"",""||" & _
+        """,LEN(RC[-3])-LEN(SUBSTITUTE(RC[-3],""-"",""""))))-1),""0000000"")&""-FL.""&SUBSTITUTE(TEXT(TEXTJOIN("""",TRUE,IFERROR(MID(RC[-2],@ROW(INDIRECT(""1:100"")),1)+0,"""")),""000""),TEXTJOIN("""",TRUE,IFERROR(MID(RC[-2],@ROW(INDIRECT(""1:100"")),1)+0,"""")),RC[-2])&""/""&RIGHT(SUBSTITUTE(RC[-3],""-"",""||"",LEN(RC[-3])-LEN(SUBSTITUTE(RC[-3],""-"",""""))),LEN(SUBSTITUTE(" & _
+        "RC[-3],""-"",""||"",LEN(RC[-3])-LEN(SUBSTITUTE(RC[-3],""-"",""""))))-FIND(""||"",SUBSTITUTE(RC[-3],""-"",""||"",LEN(RC[-3])-LEN(SUBSTITUTE(RC[-3],""-"",""""))))-1),RC[-3]&""-FL.""&RC[-2]))"
     Range("F1:G1").Select
     Selection.Copy
     Range("A1").Select
@@ -1658,7 +1658,7 @@ Workbooks(BaseVBA_SAP).Activate
         Range("Tab_zeq_estru_geral[DISPOSIÇÃO DAS FASES]").Value = Range("Tab_zeq_estru_geral[DISPOSIÇÃO DAS FASES]").Value
 
         Range("Tab_zeq_estru_geral[VÃO DE PESO (m)]").FormulaR1C1 = _
-            "=IF(OR([@ALTITUDE]="""",OFFSET([@ALTITUDE],-1,0)="""",OFFSET([@ALTITUDE],1,0)=""""),"""",IF([@SILHUETA]=""-"",""-"",[@[VÃO DE VENTO (m)]]-(IFERROR((VLOOKUP(INDEX(BASE_BD_VaosLT[NomeCabo],MATCH(OFFSET([@[NÚMERO DE OPERAÇÃO]],-1,0),BASE_BD_VaosLT[torre_numero_torre_1],0)),BASE_CabosWithOPGW,5,0))*(((IFERROR(VALUE(OFFSET([@[ALTURA MISULA (m)]],-1,0)),0)+IFERROR(VALUE(OFFSET([@ALTITUDE],-1,0)),0))-(IFERROR(VALUE([@[ALTURA MISULA (m)]]),0)+IFERROR(VALUE([@ALTITUDE]),0)))/(OFFSET([@[C" & _
+            "=IF([@SILHUETA]=""-"",""-"",IF(OR([@ALTITUDE]="""",OFFSET([@ALTITUDE],-1,0)="""",OFFSET([@ALTITUDE],1,0)=""""),"""",[@[VÃO DE VENTO (m)]]-(IFERROR((VLOOKUP(INDEX(BASE_BD_VaosLT[NomeCabo],MATCH(OFFSET([@[NÚMERO DE OPERAÇÃO]],-1,0),BASE_BD_VaosLT[torre_numero_torre_1],0)),BASE_CabosWithOPGW,5,0))*(((IFERROR(VALUE(OFFSET([@[ALTURA MISULA (m)]],-1,0)),0)+IFERROR(VALUE(OFFSET([@ALTITUDE],-1,0)),0))-(IFERROR(VALUE([@[ALTURA MISULA (m)]]),0)+IFERROR(VALUE([@ALTITUDE]),0)))/(OFFSET([@[C" & _
             "OMPRIMENTO DO VÃO (m)]],-1,0))),0)+IFERROR((VLOOKUP(INDEX(BASE_BD_VaosLT[NomeCabo],MATCH(OFFSET([@[NÚMERO DE OPERAÇÃO]],1,0),BASE_BD_VaosLT[torre_numero_torre_1],0)),BASE_CabosWithOPGW,5,0))*(((IFERROR(VALUE(OFFSET([@[ALTURA MISULA (m)]],1,0)),0)+IFERROR(VALUE(OFFSET([@ALTITUDE],1,0)),0))-(IFERROR(VALUE([@[ALTURA MISULA (m)]]),0)+IFERROR(VALUE([@ALTITUDE]),0)))/([@[" & _
             "COMPRIMENTO DO VÃO (m)]])),0))))"
         Range("Tab_zeq_estru_geral[VÃO DE PESO (m)]").Value = Range("Tab_zeq_estru_geral[VÃO DE PESO (m)]").Value
@@ -1678,6 +1678,10 @@ Workbooks(BaseVBA_SAP).Activate
             "LEN(VLOOKUP([@TORRE], '" & LC_NomeLC & "'!ListadeConstrucao[[NumOper]:[FundPernas]],29,0)))),'" & BaseAux_Nome & "'!TabFunPernas,2,0)"
         Range("Tab_zeq_estru_autop_estai[DESENHO FUNDAÇÃO PÉ]").NumberFormat = "@"
         Range("Tab_zeq_estru_autop_estai[DESENHO FUNDAÇÃO PÉ]").Value = Range("Tab_zeq_estru_autop_estai[DESENHO FUNDAÇÃO PÉ]").Value
+        On Error Resume Next
+            Range("Tab_zeq_estru_autop_estai[DESENHO FUNDAÇÃO PÉ]").Replace What:="0", Replacement:=vbNullString, LookAt:=xlWhole 'v1.7
+        On Error GoTo -1
+        On Error GoTo 0
 
         Range("Tab_zeq_estru_autop_estai[DESENHO FUNDAÇÃO PÉ]").Locked = True
         
@@ -1712,11 +1716,11 @@ Workbooks(BaseVBA_SAP).Activate
         Range("TabInfoBaseAux[Coluna4]").FormulaR1C1 = _
             "=IF(AND([@Coluna2]<>"""",[@Coluna2]<>""-""),[@Coluna2],[@Coluna3])"
         Range("TabInfoBaseAux[Coluna5]").FormulaR1C1 = _
-            "=IFERROR(LEFT([@Coluna2],FIND(""/"",[@Coluna2])-1),[@Coluna2])"
+            "=IFERROR(LEFT([@Coluna4],FIND(""/"",[@Coluna4])-1),[@Coluna4])"
         Range("TabInfoBaseAux[Coluna6]").FormulaR1C1 = _
-            "=IFERROR(LEFT(SUBSTITUTE([@Coluna2],[@Coluna5]&""/"",""""),FIND(""/"",SUBSTITUTE([@Coluna2],[@Coluna5]&""/"",""""))-1),SUBSTITUTE([@Coluna2],[@Coluna5]&""/"",""""))"
+            "=IFERROR(LEFT(SUBSTITUTE([@Coluna4],[@Coluna5]&""/"",""""),FIND(""/"",SUBSTITUTE([@Coluna4],[@Coluna5]&""/"",""""))-1),SUBSTITUTE([@Coluna4],[@Coluna5]&""/"",""""))"
         Range("TabInfoBaseAux[Coluna7]").FormulaR1C1 = _
-            "=IFERROR(RIGHT(SUBSTITUTE([@Coluna2],[@Coluna5]&""/"",""""),LEN(SUBSTITUTE([@Coluna2],[@Coluna5]&""/"",""""))-FIND(""/"",SUBSTITUTE([@Coluna2],[@Coluna5]&""/"",""""))),[@Coluna5])"
+            "=IFERROR(RIGHT(SUBSTITUTE([@Coluna4],[@Coluna5]&""/"",""""),LEN(SUBSTITUTE([@Coluna4],[@Coluna5]&""/"",""""))-FIND(""/"",SUBSTITUTE([@Coluna4],[@Coluna5]&""/"",""""))),[@Coluna5])"
 
 Workbooks(BaseVBA_SAP).Activate
     Sheets("zeq_cadeia_isol").Activate
@@ -1991,3 +1995,5 @@ Application.ScreenUpdating = True
 
 
 End Sub
+
+
