@@ -1658,9 +1658,9 @@ Workbooks(BaseVBA_SAP).Activate
         Range("Tab_zeq_estru_geral[DISPOSIÇÃO DAS FASES]").Value = Range("Tab_zeq_estru_geral[DISPOSIÇÃO DAS FASES]").Value
 
         Range("Tab_zeq_estru_geral[VÃO DE PESO (m)]").FormulaR1C1 = _
-            "=IF([@SILHUETA]=""-"",""-"",[@[VÃO DE VENTO (m)]]-(IFERROR((VLOOKUP(INDEX(BASE_BD_VaosLT[NomeCabo],MATCH(OFFSET([@[NÚMERO DE OPERAÇÃO]],-1,0),BASE_BD_VaosLT[torre_numero_torre_1],0)),BASE_CabosWithOPGW,5,0))*(((IFERROR(VALUE(OFFSET([@[ALTURA MISULA (m)]],-1,0)),0)+IFERROR(VALUE(OFFSET([@ALTITUDE],-1,0)),0))-(IFERROR(VALUE([@[ALTURA MISULA (m)]]),0)+IFERROR(VALUE([@ALTITUDE]),0)))/(OFFSET([@[C" & _
+            "=IF(OR([@ALTITUDE]="""",OFFSET([@ALTITUDE],-1,0)="""",OFFSET([@ALTITUDE],1,0)=""""),"""",IF([@SILHUETA]=""-"",""-"",[@[VÃO DE VENTO (m)]]-(IFERROR((VLOOKUP(INDEX(BASE_BD_VaosLT[NomeCabo],MATCH(OFFSET([@[NÚMERO DE OPERAÇÃO]],-1,0),BASE_BD_VaosLT[torre_numero_torre_1],0)),BASE_CabosWithOPGW,5,0))*(((IFERROR(VALUE(OFFSET([@[ALTURA MISULA (m)]],-1,0)),0)+IFERROR(VALUE(OFFSET([@ALTITUDE],-1,0)),0))-(IFERROR(VALUE([@[ALTURA MISULA (m)]]),0)+IFERROR(VALUE([@ALTITUDE]),0)))/(OFFSET([@[C" & _
             "OMPRIMENTO DO VÃO (m)]],-1,0))),0)+IFERROR((VLOOKUP(INDEX(BASE_BD_VaosLT[NomeCabo],MATCH(OFFSET([@[NÚMERO DE OPERAÇÃO]],1,0),BASE_BD_VaosLT[torre_numero_torre_1],0)),BASE_CabosWithOPGW,5,0))*(((IFERROR(VALUE(OFFSET([@[ALTURA MISULA (m)]],1,0)),0)+IFERROR(VALUE(OFFSET([@ALTITUDE],1,0)),0))-(IFERROR(VALUE([@[ALTURA MISULA (m)]]),0)+IFERROR(VALUE([@ALTITUDE]),0)))/([@[" & _
-            "COMPRIMENTO DO VÃO (m)]])),0)))"
+            "COMPRIMENTO DO VÃO (m)]])),0))))"
         Range("Tab_zeq_estru_geral[VÃO DE PESO (m)]").Value = Range("Tab_zeq_estru_geral[VÃO DE PESO (m)]").Value
 
         Range("Tab_zeq_estru_geral[ALTURA MISULA (m)], Tab_zeq_estru_geral[ALTURA TOTAL (m)], Tab_zeq_estru_geral[DISPOSIÇÃO DAS FASES], Tab_zeq_estru_geral[VÃO DE PESO (m)]").Locked = True
@@ -1991,6 +1991,8 @@ Application.ScreenUpdating = True
 
 
 End Sub
+
+
 
 
 
