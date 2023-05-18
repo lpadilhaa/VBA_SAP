@@ -1401,11 +1401,11 @@ Windows(WBTemp).Activate
     Range("F1").FormulaR1C1 = _
         "=IF(OR(RC[-4]="""",RC[-4]=""-""),RC[-4],IF(ISNUMBER(VALUE(LEFT(SUBSTITUTE(RC[-4],""-"",""||"",LEN(RC[-4])-LEN(SUBSTITUTE(RC[-4],""-"",""""))),FIND(""||"",SUBSTITUTE(RC[-4],""-"",""||"",LEN(RC[-4])-LEN(SUBSTITUTE(RC[-4],""-"",""""))))-1))),TEXT(LEFT(SUBSTITUTE(RC[-4],""-"",""||"",LEN(RC[-4])-LEN(SUBSTITUTE(RC[-4],""-"",""""))),FIND(""||"",SUBSTITUTE(RC[-4],""-"",""||" & _
         """,LEN(RC[-4])-LEN(SUBSTITUTE(RC[-4],""-"",""""))))-1),""0000000"")&""-FL.""&SUBSTITUTE(TEXT(TEXTJOIN("""",TRUE,IFERROR(MID(RC[-3],@ROW(INDIRECT(""1:100"")),1)+0,"""")),""000""),TEXTJOIN("""",TRUE,IFERROR(MID(RC[-3],@ROW(INDIRECT(""1:100"")),1)+0,"""")),RC[-3])&""/""&RIGHT(SUBSTITUTE(RC[-4],""-"",""||"",LEN(RC[-4])-LEN(SUBSTITUTE(RC[-4],""-"",""""))),LEN(SUBSTITUTE(" & _
-        "RC[-4],""-"",""||"",LEN(RC[-4])-LEN(SUBSTITUTE(RC[-4],""-"",""""))))-FIND(""||"",SUBSTITUTE(RC[-4],""-"",""||"",LEN(RC[-4])-LEN(SUBSTITUTE(RC[-4],""-"",""""))))-1),RC[-4]&""-FL.""&RC[-3]))"
+        "RC[-4],""-"",""||"",LEN(RC[-4])-LEN(SUBSTITUTE(RC[-4],""-"",""""))))-FIND(""||"",SUBSTITUTE(RC[-4],""-"",""||"",LEN(RC[-4])-LEN(SUBSTITUTE(RC[-4],""-"",""""))))-1),RC[-4]&""-FL.""&RC[-3]))" '\Corrigido na v1.7
     Range("G1").FormulaR1C1 = _
         "=IF(OR(RC[-3]="""",RC[-3]=""-""),RC[-3],IF(ISNUMBER(VALUE(LEFT(SUBSTITUTE(RC[-3],""-"",""||"",LEN(RC[-3])-LEN(SUBSTITUTE(RC[-3],""-"",""""))),FIND(""||"",SUBSTITUTE(RC[-3],""-"",""||"",LEN(RC[-3])-LEN(SUBSTITUTE(RC[-3],""-"",""""))))-1))),TEXT(LEFT(SUBSTITUTE(RC[-3],""-"",""||"",LEN(RC[-3])-LEN(SUBSTITUTE(RC[-3],""-"",""""))),FIND(""||"",SUBSTITUTE(RC[-3],""-"",""||" & _
         """,LEN(RC[-3])-LEN(SUBSTITUTE(RC[-3],""-"",""""))))-1),""0000000"")&""-FL.""&SUBSTITUTE(TEXT(TEXTJOIN("""",TRUE,IFERROR(MID(RC[-2],@ROW(INDIRECT(""1:100"")),1)+0,"""")),""000""),TEXTJOIN("""",TRUE,IFERROR(MID(RC[-2],@ROW(INDIRECT(""1:100"")),1)+0,"""")),RC[-2])&""/""&RIGHT(SUBSTITUTE(RC[-3],""-"",""||"",LEN(RC[-3])-LEN(SUBSTITUTE(RC[-3],""-"",""""))),LEN(SUBSTITUTE(" & _
-        "RC[-3],""-"",""||"",LEN(RC[-3])-LEN(SUBSTITUTE(RC[-3],""-"",""""))))-FIND(""||"",SUBSTITUTE(RC[-3],""-"",""||"",LEN(RC[-3])-LEN(SUBSTITUTE(RC[-3],""-"",""""))))-1),RC[-3]&""-FL.""&RC[-2]))"
+        "RC[-3],""-"",""||"",LEN(RC[-3])-LEN(SUBSTITUTE(RC[-3],""-"",""""))))-FIND(""||"",SUBSTITUTE(RC[-3],""-"",""||"",LEN(RC[-3])-LEN(SUBSTITUTE(RC[-3],""-"",""""))))-1),RC[-3]&""-FL.""&RC[-2]))" '\Corrigido na v1.7
     Range("F1:G1").Select
     Selection.Copy
     Range("A1").Select
@@ -1660,7 +1660,7 @@ Workbooks(BaseVBA_SAP).Activate
         Range("Tab_zeq_estru_geral[VÃO DE PESO (m)]").FormulaR1C1 = _
             "=IF([@SILHUETA]=""-"",""-"",IF(OR([@ALTITUDE]="""",OFFSET([@ALTITUDE],-1,0)="""",OFFSET([@ALTITUDE],1,0)=""""),"""",[@[VÃO DE VENTO (m)]]-(IFERROR((VLOOKUP(INDEX(BASE_BD_VaosLT[NomeCabo],MATCH(OFFSET([@[NÚMERO DE OPERAÇÃO]],-1,0),BASE_BD_VaosLT[torre_numero_torre_1],0)),BASE_CabosWithOPGW,5,0))*(((IFERROR(VALUE(OFFSET([@[ALTURA MISULA (m)]],-1,0)),0)+IFERROR(VALUE(OFFSET([@ALTITUDE],-1,0)),0))-(IFERROR(VALUE([@[ALTURA MISULA (m)]]),0)+IFERROR(VALUE([@ALTITUDE]),0)))/(OFFSET([@[C" & _
             "OMPRIMENTO DO VÃO (m)]],-1,0))),0)+IFERROR((VLOOKUP(INDEX(BASE_BD_VaosLT[NomeCabo],MATCH(OFFSET([@[NÚMERO DE OPERAÇÃO]],1,0),BASE_BD_VaosLT[torre_numero_torre_1],0)),BASE_CabosWithOPGW,5,0))*(((IFERROR(VALUE(OFFSET([@[ALTURA MISULA (m)]],1,0)),0)+IFERROR(VALUE(OFFSET([@ALTITUDE],1,0)),0))-(IFERROR(VALUE([@[ALTURA MISULA (m)]]),0)+IFERROR(VALUE([@ALTITUDE]),0)))/([@[" & _
-            "COMPRIMENTO DO VÃO (m)]])),0))))"
+            "COMPRIMENTO DO VÃO (m)]])),0))))" '\Corrigido na v1.7
         Range("Tab_zeq_estru_geral[VÃO DE PESO (m)]").Value = Range("Tab_zeq_estru_geral[VÃO DE PESO (m)]").Value
 
         Range("Tab_zeq_estru_geral[ALTURA MISULA (m)], Tab_zeq_estru_geral[ALTURA TOTAL (m)], Tab_zeq_estru_geral[DISPOSIÇÃO DAS FASES], Tab_zeq_estru_geral[VÃO DE PESO (m)]").Locked = True
