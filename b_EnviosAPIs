@@ -8,10 +8,28 @@ Public TempoFimAll As Date
 Sub LoadToAPI_All()
 
 
+    Dim ws As Worksheet
+    Dim tbl As ListObject
+    
+    For Each ws In ThisWorkbook.Worksheets
+        If ws.ListObjects.Count > 0 Then
+            For Each tbl In ws.ListObjects
+                On Error GoTo filter_ctn
+                If tbl.AutoFilter.FilterMode Then
+                    MsgBox "A planilha """ & ws.Name & """ contém filtros ativos." & Chr(13) & Chr(13) & "Remova-o e confira os dados antes de enviar.", vbExclamation
+                    Exit Sub
+                End If
+filter_ctn:
+                On Error GoTo -1
+                On Error GoTo 0
+            Next tbl
+        End If
+    Next ws
+        
 Dim MsgLoad_All As VbMsgBoxResult
 
 MsgLoad_All = MsgBox("Deseja enviar todos os dados para o banco de dados?" & vbCrLf & vbCrLf & _
-    "ATENÇÃO: todas as ZLI's e ZEQ's serão enviadas para o banco de dados, o que levará um grande tempo para concluir.", vbExclamation + vbYesNo + vbDefaultButton2, "Enviar todos os dados?")
+    "ATENÇÃO: Todas as ZLI's e ZEQ's serão enviadas para o banco de dados, o que pode levar um tempo considerável para ser concluído.", vbExclamation + vbYesNo + vbDefaultButton2, "Enviar todos os dados?")
 
 If MsgLoad_All = vbNo Then
     Exit Sub
@@ -569,6 +587,15 @@ If LoadAll = "1" Then
     GoTo Iniciar
 End If
 
+
+For Each tbl In ActiveSheet.ListObjects
+    If tbl.AutoFilter.FilterMode Then
+        MsgBox "Há filtros ativos na planilha." & Chr(13) & Chr(13) & "Remova-o e confira os dados antes de enviar.", vbExclamation
+        Exit Sub
+    End If
+Next tbl
+
+
 Iniciar_zeq_estru_geral:
 
 Dim MsgLoad_zeq_estru_geral As VbMsgBoxResult
@@ -946,6 +973,15 @@ If LoadAll = "1" Then
     GoTo Iniciar
 End If
 
+
+For Each tbl In ActiveSheet.ListObjects
+    If tbl.AutoFilter.FilterMode Then
+        MsgBox "Há filtros ativos na planilha." & Chr(13) & Chr(13) & "Remova-o e confira os dados antes de enviar.", vbExclamation
+        Exit Sub
+    End If
+Next tbl
+
+
 Iniciar_zeq_estru_autop:
 
 Dim MsgLoad_zeq_estru_autop As VbMsgBoxResult
@@ -1214,6 +1250,15 @@ If LoadAll = "1" Then
     UserForm_EnviandoAPI.Show vbModeless
     GoTo Iniciar
 End If
+
+
+For Each tbl In ActiveSheet.ListObjects
+    If tbl.AutoFilter.FilterMode Then
+        MsgBox "Há filtros ativos na planilha." & Chr(13) & Chr(13) & "Remova-o e confira os dados antes de enviar.", vbExclamation
+        Exit Sub
+    End If
+Next tbl
+
 
 Iniciar_zeq_cadeia_isol:
 
@@ -1510,6 +1555,15 @@ If LoadAll = "1" Then
     GoTo Iniciar
 End If
 
+
+For Each tbl In ActiveSheet.ListObjects
+    If tbl.AutoFilter.FilterMode Then
+        MsgBox "Há filtros ativos na planilha." & Chr(13) & Chr(13) & "Remova-o e confira os dados antes de enviar.", vbExclamation
+        Exit Sub
+    End If
+Next tbl
+
+
 Iniciar_zeq_aterramento:
 
 Dim MsgLoad_zeq_aterramento As VbMsgBoxResult
@@ -1735,6 +1789,15 @@ End Sub
 
 Sub LoadToAPI_zeq_acessos()
 
+
+For Each tbl In ActiveSheet.ListObjects
+    If tbl.AutoFilter.FilterMode Then
+        MsgBox "Há filtros ativos na planilha." & Chr(13) & Chr(13) & "Remova-o e confira os dados antes de enviar.", vbExclamation
+        Exit Sub
+    End If
+Next tbl
+
+
 MsgDesabilitado = MsgBox("Envio de dados ""ZEQ_ACESSOS"" desabilitado.", vbCritical, "Desabilitado")
 
 End Sub
@@ -1752,6 +1815,15 @@ If LoadAll = "1" Then
     UserForm_EnviandoAPI.Show vbModeless
     GoTo Iniciar
 End If
+
+
+For Each tbl In ActiveSheet.ListObjects
+    If tbl.AutoFilter.FilterMode Then
+        MsgBox "Há filtros ativos na planilha." & Chr(13) & Chr(13) & "Remova-o e confira os dados antes de enviar.", vbExclamation
+        Exit Sub
+    End If
+Next tbl
+
 
 Iniciar_zeq_condutor:
 
@@ -2073,6 +2145,15 @@ If LoadAll = "1" Then
     GoTo Iniciar
 End If
 
+
+For Each tbl In ActiveSheet.ListObjects
+    If tbl.AutoFilter.FilterMode Then
+        MsgBox "Há filtros ativos na planilha." & Chr(13) & Chr(13) & "Remova-o e confira os dados antes de enviar.", vbExclamation
+        Exit Sub
+    End If
+Next tbl
+
+
 Iniciar_zeq_pararaio:
 
 Dim MsgLoad_zeq_pararaio As VbMsgBoxResult
@@ -2388,6 +2469,15 @@ If LoadAll = "1" Then
     GoTo Iniciar
 End If
 
+
+For Each tbl In ActiveSheet.ListObjects
+    If tbl.AutoFilter.FilterMode Then
+        MsgBox "Há filtros ativos na planilha." & Chr(13) & Chr(13) & "Remova-o e confira os dados antes de enviar.", vbExclamation
+        Exit Sub
+    End If
+Next tbl
+
+
 Iniciar_zeq_opgw:
 
 Dim MsgLoad_zeq_opgw As VbMsgBoxResult
@@ -2656,6 +2746,15 @@ If LoadAll = "1" Then
     UserForm_EnviandoAPI.Show vbModeless
     GoTo Iniciar
 End If
+
+
+For Each tbl In ActiveSheet.ListObjects
+    If tbl.AutoFilter.FilterMode Then
+        MsgBox "Há filtros ativos na planilha." & Chr(13) & Chr(13) & "Remova-o e confira os dados antes de enviar.", vbExclamation
+        Exit Sub
+    End If
+Next tbl
+
 
 Iniciar_zeq_servidao:
 
