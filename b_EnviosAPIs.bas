@@ -7,7 +7,11 @@ Public TempoFimAll As Date
 
 Sub LoadToAPI_All()
 
-
+If Range("Label_NomeLT").Locked = False Then
+    MsgNaoImportado = MsgBox("Importe os dados da LT e realize o preenchimento completo antes de enviar para o banco de dados", vbExclamation, "Dados não importados")
+    Exit Sub
+End If
+    
     Dim ws As Worksheet
     Dim tbl As ListObject
     
@@ -43,6 +47,11 @@ End Sub
 
 
 Sub LoadToAPI_zli_transmissao()
+
+If Range("Label_NomeLT").Locked = False Then
+    MsgNaoImportado = MsgBox("Importe os dados da LT e realize o preenchimento completo antes de enviar para o banco de dados", vbExclamation, "Dados não importados")
+    Exit Sub
+End If
 
 APIAtual = "ZLI_TRANSMISSAO"
 CodLT = Range("Label_CodLT")
@@ -281,6 +290,11 @@ End Sub
 
 Sub LoadToAPI_zli_parametros_op()
 
+
+If Range("Label_NomeLT").Locked = False Then
+    MsgNaoImportado = MsgBox("Importe os dados da LT e realize o preenchimento completo antes de enviar para o banco de dados", vbExclamation, "Dados não importados")
+    Exit Sub
+End If
 
 APIAtual = "ZLI_PARAMETROS_OP"
 CodLT = Range("Label_CodLT")
@@ -576,6 +590,11 @@ End Sub
 
 Sub LoadToAPI_zeq_estru_geral()
 
+
+If Range("Label_NomeLT").Locked = False Then
+    MsgNaoImportado = MsgBox("Importe os dados da LT e realize o preenchimento completo antes de enviar para o banco de dados", vbExclamation, "Dados não importados")
+    Exit Sub
+End If
 
 APIAtual = "ZEQ_ESTRUTURA_GERAL"
 CodLT = Range("Label_CodLT")
@@ -963,6 +982,11 @@ End Sub
 Sub LoadToAPI_zeq_estru_autop()
 
 
+If Range("Label_NomeLT").Locked = False Then
+    MsgNaoImportado = MsgBox("Importe os dados da LT e realize o preenchimento completo antes de enviar para o banco de dados", vbExclamation, "Dados não importados")
+    Exit Sub
+End If
+
 APIAtual = "ZEQ_ESTRUTURA_AUTOPORTANTE"
 CodLT = Range("Label_CodLT")
 
@@ -1240,6 +1264,11 @@ End Sub
 
 Sub LoadToAPI_zeq_cadeia_isol()
 
+
+If Range("Label_NomeLT").Locked = False Then
+    MsgNaoImportado = MsgBox("Importe os dados da LT e realize o preenchimento completo antes de enviar para o banco de dados", vbExclamation, "Dados não importados")
+    Exit Sub
+End If
 
 APIAtual = "ZEQ_CADEIA_ISOLADORES"
 CodLT = Range("Label_CodLT")
@@ -1545,6 +1574,11 @@ End Sub
 Sub LoadToAPI_zeq_aterramento()
 
 
+If Range("Label_NomeLT").Locked = False Then
+    MsgNaoImportado = MsgBox("Importe os dados da LT e realize o preenchimento completo antes de enviar para o banco de dados", vbExclamation, "Dados não importados")
+    Exit Sub
+End If
+
 APIAtual = "ZEQ_ATERRAMENTO"
 CodLT = Range("Label_CodLT")
 
@@ -1790,6 +1824,11 @@ End Sub
 Sub LoadToAPI_zeq_acessos()
 
 
+If Range("Label_NomeLT").Locked = False Then
+    MsgNaoImportado = MsgBox("Importe os dados da LT e realize o preenchimento completo antes de enviar para o banco de dados", vbExclamation, "Dados não importados")
+    Exit Sub
+End If
+
 For Each tbl In ActiveSheet.ListObjects
     If tbl.AutoFilter.FilterMode Then
         MsgBox "Há filtros ativos na planilha." & Chr(13) & Chr(13) & "Remova-o e confira os dados antes de enviar.", vbExclamation
@@ -1805,6 +1844,11 @@ End Sub
 
 Sub LoadToAPI_zeq_condutor()
 
+
+If Range("Label_NomeLT").Locked = False Then
+    MsgNaoImportado = MsgBox("Importe os dados da LT e realize o preenchimento completo antes de enviar para o banco de dados", vbExclamation, "Dados não importados")
+    Exit Sub
+End If
 
 APIAtual = "ZEQ_CONDUTOR"
 CodLT = Range("Label_CodLT")
@@ -2135,6 +2179,11 @@ End Sub
 Sub LoadToAPI_zeq_pararaio()
 
 
+If Range("Label_NomeLT").Locked = False Then
+    MsgNaoImportado = MsgBox("Importe os dados da LT e realize o preenchimento completo antes de enviar para o banco de dados", vbExclamation, "Dados não importados")
+    Exit Sub
+End If
+
 APIAtual = "ZEQ_PARARAIO"
 CodLT = Range("Label_CodLT")
 
@@ -2459,6 +2508,11 @@ End Sub
 Sub LoadToAPI_zeq_opgw()
 
 
+If Range("Label_NomeLT").Locked = False Then
+    MsgNaoImportado = MsgBox("Importe os dados da LT e realize o preenchimento completo antes de enviar para o banco de dados", vbExclamation, "Dados não importados")
+    Exit Sub
+End If
+
 APIAtual = "ZEQ_OPGW"
 CodLT = Range("Label_CodLT")
 
@@ -2736,6 +2790,11 @@ End Sub
 
 Sub LoadToAPI_zeq_servidao()
 
+
+If Range("Label_NomeLT").Locked = False Then
+    MsgNaoImportado = MsgBox("Importe os dados da LT e realize o preenchimento completo antes de enviar para o banco de dados", vbExclamation, "Dados não importados")
+    Exit Sub
+End If
 
 APIAtual = "ZEQ_SERVIDAO"
 CodLT = Range("Label_CodLT")
@@ -3101,6 +3160,8 @@ End If
 FimGeral:
 
 End Sub
+
+
 
 
 
