@@ -1,5 +1,10 @@
 Sub Atualizar_SAP() '//NUNCA ALTERAR O NOME DA SUB
+
     
+        newCode3 = GetGitHubFileContent("lpadilhaa", "VBA_SAP", "main", "d_ProtectUnprotect.bas") 'v1.8
+                    ThisWorkbook.VBProject.VBComponents("ProtectUnprotect").CodeModule.DeleteLines 1, ThisWorkbook.VBProject.VBComponents("ProtectUnprotect").CodeModule.CountOfLines 'v1.8
+                    ThisWorkbook.VBProject.VBComponents("ProtectUnprotect").CodeModule.InsertLines 1, newCode3 'v1.8
+        Set newCode3 = Nothing 'v1.8
 
         newCode1 = GetGitHubFileContent("lpadilhaa", "VBA_SAP", "main", "a_PreencherDados.bas")
                     ThisWorkbook.VBProject.VBComponents("a_PreecherDados").CodeModule.DeleteLines 1, ThisWorkbook.VBProject.VBComponents("a_PreecherDados").CodeModule.CountOfLines
@@ -10,11 +15,7 @@ Sub Atualizar_SAP() '//NUNCA ALTERAR O NOME DA SUB
                     ThisWorkbook.VBProject.VBComponents("b_EnviosAPIs").CodeModule.DeleteLines 1, ThisWorkbook.VBProject.VBComponents("b_EnviosAPIs").CodeModule.CountOfLines 'v1.6
                     ThisWorkbook.VBProject.VBComponents("b_EnviosAPIs").CodeModule.InsertLines 1, newCode2 'v1.6
         Set newCode2 = Nothing 'v1.6
-    
-        newCode3 = GetGitHubFileContent("lpadilhaa", "VBA_SAP", "main", "d_ProtectUnprotect.bas") 'v1.8
-                    ThisWorkbook.VBProject.VBComponents("ProtectUnprotect").CodeModule.DeleteLines 1, ThisWorkbook.VBProject.VBComponents("ProtectUnprotect").CodeModule.CountOfLines 'v1.8
-                    ThisWorkbook.VBProject.VBComponents("ProtectUnprotect").CodeModule.InsertLines 1, newCode3 'v1.8
-        Set newCode3 = Nothing 'v1.8
+  
             
         ActiveWindow.DisplayWorkbookTabs = False 'v1.6
             
