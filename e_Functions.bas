@@ -27,11 +27,3 @@ Function Base64Decode(base64String As String) As Byte()
     elem.text = base64String
     Base64Decode = elem.nodeTypedValue
 End Function
-
-Sub UnprotectSheet()
-    If ActiveSheet.ProtectContents = False Then
-        MsgJaDesprotegida = MsgBox("Os dados já estão desprotegidos.", vbInformation, "Desproteger dados")
-        Exit Sub
-    End If
-    UserForm_Password.Show
-End Sub
