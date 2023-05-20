@@ -11,55 +11,11 @@ Sub Atualizar_SAP() '//NUNCA ALTERAR O NOME DA SUB
                     ThisWorkbook.VBProject.VBComponents("b_EnviosAPIs").CodeModule.InsertLines 1, newCode2 'v1.6
         Set newCode2 = Nothing 'v1.6
         
-        On Error GoTo CriarModuloFunctions  'v1.8
-        Dim VerificaModulo As Object
-            Set VerificaModulo = ThisWorkbook.VBProject.VBComponents("Functions")
-            GoTo continuar1
-
-CriarModuloFunctions:  'v1.8
-        On Error GoTo 0
-        On Error GoTo -1
-        ThisWorkbook.VBProject.References.AddFromGuid "{0002E157-0000-0000-C000-000000000046}", 2, 0
         
-continuar1:
-        On Error GoTo 0
-        On Error GoTo -1
-        Call Atualizar_SAP2
-        
-End Sub
-
-Sub Atualizar_SAP2()
-
-        On Error GoTo CriarModuloFunctions2  'v1.8
-        Dim VerificaModulo As Object
-            Set VerificaModulo = ThisWorkbook.VBProject.VBComponents("Functions")
-            GoTo continuar2
-
-CriarModuloFunctions2:
-        Dim novoModulo As Object
-            Set novoModulo = ThisWorkbook.VBProject.VBComponents.Add(vbext_ct_StdModule)
-            novoModulo.Name = "Functions"
-
-continuar2:  'v1.8
-On Error GoTo 0
-On Error GoTo -1
-
-        newCode3 = GetGitHubFileContent("lpadilhaa", "VBA_SAP", "main", "e_Functions.bas") 'v1.8
-                    ThisWorkbook.VBProject.VBComponents("Functions").CodeModule.DeleteLines 1, ThisWorkbook.VBProject.VBComponents("Functions").CodeModule.CountOfLines
-                    ThisWorkbook.VBProject.VBComponents("Functions").CodeModule.InsertLines 1, newCode3
-        Set newCode3 = Nothing
-        
-       ThisWorkbook.Save
-
-        newCode4 = GetGitHubFileContent("lpadilhaa", "VBA_SAP", "main", "d_ProtectUnprotect.bas") 'v1.8
-                    ThisWorkbook.VBProject.VBComponents("ProtectUnprotect").CodeModule.DeleteLines 1, ThisWorkbook.VBProject.VBComponents("ProtectUnprotect").CodeModule.CountOfLines
-                    ThisWorkbook.VBProject.VBComponents("ProtectUnprotect").CodeModule.InsertLines 1, newCode4
-        Set newCode4 = Nothing
-
-        ThisWorkbook.Save
-                                
+        AtivarFiltro = Replace(ThisWorkbook.VBProject.VBComponents("ProtectUnprotect").CodeModule.Lines(40, 1), "AllowFiltering:=False", "AllowFiltering:=True")
+        ThisWorkbook.VBProject.VBComponents("ProtectUnprotect").CodeModule.ReplaceLine 40, AtivarFiltro
+    
         ActiveWindow.DisplayWorkbookTabs = False 'v1.6
-            
             
     If Range("Label_NomeLT").Locked = True Then
         
@@ -114,4 +70,3 @@ On Error GoTo -1
     End If
 
 End Sub
-
