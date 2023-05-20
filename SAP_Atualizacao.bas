@@ -10,10 +10,9 @@ Sub Atualizar_SAP() '//NUNCA ALTERAR O NOME DA SUB
                     ThisWorkbook.VBProject.VBComponents("b_EnviosAPIs").CodeModule.DeleteLines 1, ThisWorkbook.VBProject.VBComponents("b_EnviosAPIs").CodeModule.CountOfLines 'v1.6
                     ThisWorkbook.VBProject.VBComponents("b_EnviosAPIs").CodeModule.InsertLines 1, newCode2 'v1.6
         Set newCode2 = Nothing 'v1.6
-        
-        
-        AtivarFiltro = Replace(ThisWorkbook.VBProject.VBComponents("ProtectUnprotect").CodeModule.Lines(40, 1), "AllowFiltering:=False", "AllowFiltering:=True")
-        ThisWorkbook.VBProject.VBComponents("ProtectUnprotect").CodeModule.ReplaceLine 40, AtivarFiltro
+
+        AtivarFiltro = Replace(ThisWorkbook.VBProject.VBComponents("ProtectUnprotect").CodeModule.Lines(40, 1), "AllowFiltering:=False", "AllowFiltering:=True") 'v1.8
+        ThisWorkbook.VBProject.VBComponents("ProtectUnprotect").CodeModule.ReplaceLine 40, AtivarFiltro 'v1.8
     
         ActiveWindow.DisplayWorkbookTabs = False 'v1.6
             
