@@ -41,8 +41,6 @@ Sub ProtectSheet()
         MsgJaProtegida = MsgBox("Os dados já estão protegidos.", vbInformation, "Proteger dados")
         Exit Sub
     End If
-    ActiveSheet.Protect DrawingObjects:=True, Contents:=True, Scenarios:=True, AllowFiltering:=False, _
-    Password:=StrConv(Base64Decode("UGFkaWxoYUgyTSo="), vbUnicode)
+    ActiveSheet.Protect DrawingObjects:=True, Contents:=True, Scenarios:=True, AllowFiltering:=True, Password:=StrConv(Base64Decode("UGFkaWxoYUgyTSo="), vbUnicode)
     MsgProtegida = MsgBox("Dados protegidos!", vbInformation, "Proteger dados")
-
 End Sub
