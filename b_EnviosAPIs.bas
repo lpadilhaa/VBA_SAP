@@ -1731,7 +1731,7 @@ End Select
     Repete = Repete + 1
 
 Set configuracao_aterramento = Nothing
-Set d_tipo_cabo_contrapeso_id = Nothing
+Set tipo_cabo_contrapeso = Nothing
 Set comp_tot_cabo_contrapeso = Nothing
 Set d_tipo_fio_interligacao_id = Nothing
 Set comp_total_fio_interligacao = Nothing
@@ -2362,7 +2362,7 @@ End Select
     Dim json As Object
     Set json = CreateObject("Scripting.Dictionary")
     
-        json("d_tipo_cabo_id") = d_tipo_cabo_id
+        json("tipo_cabo") = tipo_cabo
         json("d_tipo_arranjo_cabo_id") = d_tipo_arranjo_cabo_id
         json("desenho_arranjo") = desenho_arranjo
         json("quantidade_amortecedores") = quantidade_amortecedores
@@ -2407,7 +2407,7 @@ nextLoop:
 
 Set identificacao_vao = Nothing
 Set lado_pararaio = Nothing
-Set d_tipo_cabo_id = Nothing
+Set tipo_cabo = Nothing
 Set d_tipo_arranjo_cabo_id = Nothing
 Set desenho_arranjo = Nothing
 Set quantidade_amortecedores = Nothing
