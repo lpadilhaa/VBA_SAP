@@ -659,20 +659,20 @@ Dim get_numero_operacao As String
 Dim get_numero_projeto As String
 Dim get_silhueta As String
 Dim get_d_tipo_estrutura_linha_id As String
-Dim get_altura_total As String
+Dim get_altura_total As Variant
 Dim get_d_material_construtivo_id As String
 Dim get_d_disposicao_fases_id As String
 Dim get_desenho_lista_construcao As String
 Dim get_desenho_perfil_planta As String
-Dim get_menor_distancia_fases_polos As String
+Dim get_menor_distancia_fases_polos As Variant
 Dim get_d_tipo_circuito_id As String
-Dim get_altura_misula As String
-Dim get_vao_vento As String
-Dim get_vao_peso As String
-Dim get_comprimento_vao As String
-Dim get_distancia_progressiva As String
+Dim get_altura_misula As Variant
+Dim get_vao_vento As Variant
+Dim get_vao_peso As Variant
+Dim get_comprimento_vao As Variant
+Dim get_distancia_progressiva As Variant
 Dim get_angulo_deflexao As String
-Dim get_altitude As String
+Dim get_altitude As Variant
 Dim get_latitude As String
 Dim get_longitude As String
 Dim get_datum As String
@@ -686,10 +686,6 @@ Do While Repete <= QtdeTorres
 
 NumOP = Range("Tab_zeq_estru_geral[NÚMERO DE OPERAÇÃO]").Rows(Repete).text
     
-      ActiveWorkbook.Queries.Item("Param_NumOP").Formula = _
-        """" & NumOP & """ meta [IsParameterQuery=true, Type=""Text"", IsParameterQueryRequired=true]"
-    
-
 sequencia_num_torre = Application.Match(NumOP, Range("Query_ID_zeq_estru_geral[numero_torre]"), 0)
 
 ID = Range("Query_ID_zeq_estru_geral[ID_zeq_estru_geral]").Rows(sequencia_num_torre)
@@ -1065,10 +1061,6 @@ Do While Repete <= QtdeTorres
 
 NumOP = Range("Tab_zeq_estru_autop_estai[TORRE]").Rows(Repete).text
     
-      ActiveWorkbook.Queries.Item("Param_NumOP").Formula = _
-        """" & NumOP & """ meta [IsParameterQuery=true, Type=""Text"", IsParameterQueryRequired=true]"
-    
-
 sequencia_num_torre = Application.Match(NumOP, Range("Query_ID_zeq_estru_autop[numero_torre]"), 0)
 
 ID = Range("Query_ID_zeq_estru_autop[ID_zeq_estru_autop]").Rows(sequencia_num_torre)
@@ -1353,10 +1345,6 @@ Do While Repete <= QtdeTorres
 
 NumOP = Range("Tab_zeq_cadeia_isol[TORRE]").Rows(Repete).text & "|" & Range("Tab_zeq_cadeia_isol[FASEAMENTO ELÉTRICO]").Rows(Repete).text
     
-      ActiveWorkbook.Queries.Item("Param_NumOP").Formula = _
-        """" & NumOP & """ meta [IsParameterQuery=true, Type=""Text"", IsParameterQueryRequired=true]"
-    
-
 sequencia_num_torre = Application.Match(NumOP, Range("Query_ID_zeq_cadeia_isol[numero_torre|fase_cadeia_isol]"), 0)
 
 ID = Range("Query_ID_zeq_cadeia_isol[ID_zeq_cadeia_isol]").Rows(sequencia_num_torre)
@@ -1654,10 +1642,6 @@ Do While Repete <= QtdeTorres
 
 NumOP = Range("Tab_zeq_aterramento[TORRE]").Rows(Repete).text
     
-      ActiveWorkbook.Queries.Item("Param_NumOP").Formula = _
-        """" & NumOP & """ meta [IsParameterQuery=true, Type=""Text"", IsParameterQueryRequired=true]"
-    
-
 sequencia_num_torre = Application.Match(NumOP, Range("Query_ID_zeq_aterramento[numero_torre]"), 0)
 
 ID = Range("Query_ID_zeq_aterramento[ID_zeq_aterramento]").Rows(sequencia_num_torre)
@@ -3160,3 +3144,5 @@ End If
 FimGeral:
 
 End Sub
+
+
