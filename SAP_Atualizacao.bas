@@ -13,6 +13,12 @@ Sub Atualizar_SAP() '//NUNCA ALTERAR O NOME DA SUB
     
         ActiveWindow.DisplayWorkbookTabs = False 'v1.6
             
+        On Error Resume Next
+        ActiveWorkbook.Queries.Item("Param_NumOP").Delete
+        On Error GoTo 0
+        On Error GoTo -1
+
+        
     If Range("Label_NomeLT").Locked = True Then
         
     Sheets("zeq_cadeia_isol").Unprotect (StrConv(Base64Decode("UGFkaWxoYUgyTSo="), vbUnicode))
