@@ -1,1 +1,1 @@
-Version = //VBA SAP v1.7//
+Version = //VBA SAP v1.8//
