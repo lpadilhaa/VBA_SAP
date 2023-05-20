@@ -48,14 +48,16 @@ On Error GoTo -1
                     ThisWorkbook.VBProject.VBComponents("Functions").CodeModule.DeleteLines 1, ThisWorkbook.VBProject.VBComponents("Functions").CodeModule.CountOfLines
                     ThisWorkbook.VBProject.VBComponents("Functions").CodeModule.InsertLines 1, newCode3
         Set newCode3 = Nothing
-
+        
+       ThisWorkbook.Save
 
         newCode4 = GetGitHubFileContent("lpadilhaa", "VBA_SAP", "main", "d_ProtectUnprotect.bas") 'v1.8
                     ThisWorkbook.VBProject.VBComponents("ProtectUnprotect").CodeModule.DeleteLines 1, ThisWorkbook.VBProject.VBComponents("ProtectUnprotect").CodeModule.CountOfLines
                     ThisWorkbook.VBProject.VBComponents("ProtectUnprotect").CodeModule.InsertLines 1, newCode4
         Set newCode4 = Nothing
 
-        
+        ThisWorkbook.Save
+                                
         ActiveWindow.DisplayWorkbookTabs = False 'v1.6
             
             
