@@ -11,12 +11,17 @@ Sub Atualizar_SAP() '//NUNCA ALTERAR O NOME DA SUB
                     ThisWorkbook.VBProject.VBComponents("b_EnviosAPIs").CodeModule.InsertLines 1, newCode2 'v1.6
         Set newCode2 = Nothing 'v1.6
     
+        newCode3 = GetGitHubFileContent("lpadilhaa", "VBA_SAP", "main", "d_ProtectUnprotect.bas") 'v1.8
+                    ThisWorkbook.VBProject.VBComponents("ProtectUnprotect").CodeModule.DeleteLines 1, ThisWorkbook.VBProject.VBComponents("ProtectUnprotect").CodeModule.CountOfLines 'v1.8
+                    ThisWorkbook.VBProject.VBComponents("ProtectUnprotect").CodeModule.InsertLines 1, newCode3 'v1.8
+        Set newCode3 = Nothing 'v1.8
+            
         ActiveWindow.DisplayWorkbookTabs = False 'v1.6
             
-        On Error Resume Next
-        ActiveWorkbook.Queries.Item("Param_NumOP").Delete
-        On Error GoTo 0
-        On Error GoTo -1
+        On Error Resume Next 'v.18
+        ActiveWorkbook.Queries.Item("Param_NumOP").Delete 'v.18
+        On Error GoTo 0 'v.18
+        On Error GoTo -1 'v.18
 
         
     If Range("Label_NomeLT").Locked = True Then
