@@ -1668,7 +1668,7 @@ End Select
 
 Select Case get_comp_tot_cabo_contrapeso
     Case "", "-": comp_tot_cabo_contrapeso = Null
-    Case Else: comp_tot_cabo_contrapeso = get_comp_tot_cabo_contrapeso
+    Case Else: comp_tot_cabo_contrapeso = Round(get_comp_tot_cabo_contrapeso, 0)
 End Select
 
 Select Case get_tipo_fio_interligacao
