@@ -200,8 +200,8 @@ Else:
 End If
 
     WinHttpReq.SetRequestHeader "Content-Type", "application/json"
-        Get_Token = GetGitHubFileContent("lpadilhaa", "VBA_SAP", "main", "APIToken.bas") 'v.1.9
-    WinHttpReq.SetRequestHeader "Authorization", Get_Token 'v.1.9
+        Get_Token = GetGitHubFileContent("lpadilhaa", "VBA_SAP", "main", "APIToken.bas")
+    WinHttpReq.SetRequestHeader "Authorization", Get_Token
     Dim json As Object
     Set json = CreateObject("Scripting.Dictionary")
     
@@ -489,8 +489,8 @@ Else:
 End If
 
     WinHttpReq.SetRequestHeader "Content-Type", "application/json"
-        Get_Token = GetGitHubFileContent("lpadilhaa", "VBA_SAP", "main", "APIToken.bas") 'v.1.9
-    WinHttpReq.SetRequestHeader "Authorization", Get_Token 'v.1.9
+        Get_Token = GetGitHubFileContent("lpadilhaa", "VBA_SAP", "main", "APIToken.bas")
+    WinHttpReq.SetRequestHeader "Authorization", Get_Token
     Dim json As Object
     Set json = CreateObject("Scripting.Dictionary")
         
@@ -683,7 +683,7 @@ Dim get_latitude As String
 Dim get_longitude As String
 Dim get_datum As String
 
-        Get_Token = GetGitHubFileContent("lpadilhaa", "VBA_SAP", "main", "APIToken.bas") 'v.1.9
+        Get_Token = GetGitHubFileContent("lpadilhaa", "VBA_SAP", "main", "APIToken.bas")
 
 Dim Repete As Integer
 Repete = 1
@@ -845,7 +845,7 @@ End Select
 
     WinHttpReq.Open "PUT", "http://apilevantamento.h2m.eng.br:3000/api/zeq_estru_geral_lt/" & ID, False
     WinHttpReq.SetRequestHeader "Content-Type", "application/json"
-    WinHttpReq.SetRequestHeader "Authorization", Get_Token 'v.1.9
+    WinHttpReq.SetRequestHeader "Authorization", Get_Token
 
     Dim json As Object
     Set json = CreateObject("Scripting.Dictionary")
@@ -1060,7 +1060,7 @@ Dim get_delta_h As Variant
 Dim get_d_fundacao_id As String
 Dim get_desenho_fundacao As String
 
-        Get_Token = GetGitHubFileContent("lpadilhaa", "VBA_SAP", "main", "APIToken.bas") 'v.1.9
+        Get_Token = GetGitHubFileContent("lpadilhaa", "VBA_SAP", "main", "APIToken.bas")
 
 Dim Repete As Integer
 Repete = 1
@@ -1147,7 +1147,7 @@ End Select
 
     WinHttpReq.Open "PUT", "http://apilevantamento.h2m.eng.br:3000/api/zeq_estru_autop_lt/" & ID, False
     WinHttpReq.SetRequestHeader "Content-Type", "application/json"
-    WinHttpReq.SetRequestHeader "Authorization", Get_Token 'v.1.9
+    WinHttpReq.SetRequestHeader "Authorization", Get_Token
 
     Dim json As Object
     Set json = CreateObject("Scripting.Dictionary")
@@ -1346,7 +1346,7 @@ Dim get_d_tipo_arranjo_cadeia_id As String
 Dim get_d_composicao_arranjo_id As String
 Dim get_massa_peso_adicional As Variant
 
-        Get_Token = GetGitHubFileContent("lpadilhaa", "VBA_SAP", "main", "APIToken.bas") 'v.1.9
+        Get_Token = GetGitHubFileContent("lpadilhaa", "VBA_SAP", "main", "APIToken.bas")
 
 Dim Repete As Integer
 Repete = 1
@@ -1451,7 +1451,7 @@ End Select
     Set WinHttpReq = CreateObject("WinHttp.WinHttpRequest.5.1")
     WinHttpReq.Open "PUT", "http://apilevantamento.h2m.eng.br:3000/api/" & API & "/" & ID, False
     WinHttpReq.SetRequestHeader "Content-Type", "application/json"
-    WinHttpReq.SetRequestHeader "Authorization", Get_Token 'v.1.9
+    WinHttpReq.SetRequestHeader "Authorization", Get_Token
 
     Dim json As Object
     Set json = CreateObject("Scripting.Dictionary")
@@ -1646,7 +1646,7 @@ Dim get_comp_total_fio_interligacao As Variant
 Dim get_resistividade_solo As Variant
 Dim get_classificacao_solo As String
 
-        Get_Token = GetGitHubFileContent("lpadilhaa", "VBA_SAP", "main", "APIToken.bas") 'v.1.9
+        Get_Token = GetGitHubFileContent("lpadilhaa", "VBA_SAP", "main", "APIToken.bas")
 
 Dim Repete As Integer
 Repete = 1
@@ -1711,7 +1711,7 @@ End Select
 
     WinHttpReq.Open "PUT", "http://apilevantamento.h2m.eng.br:3000/api/zeq_aterramento_lt/" & ID, False
     WinHttpReq.SetRequestHeader "Content-Type", "application/json"
-    WinHttpReq.SetRequestHeader "Authorization", Get_Token 'v.1.9
+    WinHttpReq.SetRequestHeader "Authorization", Get_Token
 
     Dim json As Object
     Set json = CreateObject("Scripting.Dictionary")
@@ -1927,7 +1927,7 @@ Dim get_d_tipo_espacador_id As String
 Dim get_d_zeq_tipo_emenda_1_id As String
 Dim get_d_zeq_tipo_emenda_2_id As String
 
-        Get_Token = GetGitHubFileContent("lpadilhaa", "VBA_SAP", "main", "APIToken.bas") 'v.1.9
+        Get_Token = GetGitHubFileContent("lpadilhaa", "VBA_SAP", "main", "APIToken.bas")
 
 Dim Repete As Integer
 Repete = 1
@@ -2050,7 +2050,7 @@ End Select
     Set WinHttpReq = CreateObject("WinHttp.WinHttpRequest.5.1")
     WinHttpReq.Open "PUT", "http://apilevantamento.h2m.eng.br:3000/api/" & API & "/" & ID, False
     WinHttpReq.SetRequestHeader "Content-Type", "application/json"
-    WinHttpReq.SetRequestHeader "Authorization", Get_Token 'v.1.9
+    WinHttpReq.SetRequestHeader "Authorization", Get_Token
 
     Dim json As Object
     Set json = CreateObject("Scripting.Dictionary")
@@ -2261,7 +2261,7 @@ Dim get_d_tipo_emenda_id As String
 Dim get_tracao_eds As Variant
 Dim get_para_raio_isolados As String
 
-        Get_Token = GetGitHubFileContent("lpadilhaa", "VBA_SAP", "main", "APIToken.bas") 'v.1.9
+        Get_Token = GetGitHubFileContent("lpadilhaa", "VBA_SAP", "main", "APIToken.bas")
 
 Dim Repete As Integer
 Repete = 1
@@ -2378,7 +2378,7 @@ End Select
     Set WinHttpReq = CreateObject("WinHttp.WinHttpRequest.5.1")
     WinHttpReq.Open "PUT", "http://apilevantamento.h2m.eng.br:3000/api/" & API & "/" & ID, False
     WinHttpReq.SetRequestHeader "Content-Type", "application/json"
-    WinHttpReq.SetRequestHeader "Authorization", Get_Token 'v.1.9
+    WinHttpReq.SetRequestHeader "Authorization", Get_Token
 
     Dim json As Object
     Set json = CreateObject("Scripting.Dictionary")
@@ -2588,7 +2588,7 @@ Dim get_secao As Variant
 Dim get_diametro As Variant
 Dim get_d_zeq_sim_nao_caixa_emenda_id As String
 
-        Get_Token = GetGitHubFileContent("lpadilhaa", "VBA_SAP", "main", "APIToken.bas") 'v.1.9
+        Get_Token = GetGitHubFileContent("lpadilhaa", "VBA_SAP", "main", "APIToken.bas")
 
 Dim Repete As Integer
 Repete = 1
@@ -2674,7 +2674,7 @@ End Select
     Set WinHttpReq = CreateObject("WinHttp.WinHttpRequest.5.1")
     WinHttpReq.Open "PUT", "http://apilevantamento.h2m.eng.br:3000/api/" & API & "/" & ID, False
     WinHttpReq.SetRequestHeader "Content-Type", "application/json"
-    WinHttpReq.SetRequestHeader "Authorization", Get_Token 'v.1.9
+    WinHttpReq.SetRequestHeader "Authorization", Get_Token
 
     Dim json As Object
     Set json = CreateObject("Scripting.Dictionary")
@@ -2880,7 +2880,7 @@ Dim get_dist_vertic_cabo_travessia As Variant
 Dim get_dist_horiz_torre_travessia As Variant
 Dim get_observacao_travessia As String
 
-        Get_Token = GetGitHubFileContent("lpadilhaa", "VBA_SAP", "main", "APIToken.bas") 'v.1.9
+        Get_Token = GetGitHubFileContent("lpadilhaa", "VBA_SAP", "main", "APIToken.bas")
 
 Dim Repete As Integer
 Repete = 1
@@ -3024,7 +3024,7 @@ End Select
     Set WinHttpReq = CreateObject("WinHttp.WinHttpRequest.5.1")
     WinHttpReq.Open "PUT", "http://apilevantamento.h2m.eng.br:3000/api/zeq_servidao_lt/" & ID, False
     WinHttpReq.SetRequestHeader "Content-Type", "application/json"
-    WinHttpReq.SetRequestHeader "Authorization", Get_Token 'v.1.9
+    WinHttpReq.SetRequestHeader "Authorization", Get_Token
 
     Dim json As Object
     Set json = CreateObject("Scripting.Dictionary")
