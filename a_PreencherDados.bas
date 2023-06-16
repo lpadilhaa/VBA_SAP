@@ -5,16 +5,16 @@ Public LT_NomeLT As String
 
 Sub Preencher_Dados()
 
-'Obter token:
-    Get_Token = GetGitHubFileContent("lpadilhaa", "VBA_SAP", "main", "APIToken.bas")
+'Obter token: '\v1.9
+    Get_Token = GetGitHubFileContent("lpadilhaa", "VBA_SAP", "main", "APIToken.bas") '\v1.9
         ActiveWorkbook.Queries.Item("Param_APIToken").Formula = _
-            """" & Get_Token & """ meta [IsParameterQuery=true, Type=""Any""]"
-'Token obtido
+            """" & Get_Token & """ meta [IsParameterQuery=true, Type=""Any""]" '\v1.9
+'Token obtido '\v1.9
 
-If Range("Label_CodLT") = "" Then
-    Err_MsgLTNaoSelecionada = MsgBox("Antes, preencha os cabeçalhos da LT para importar.", vbExclamation, "LT não selecionada")
-    Exit Sub
-End If
+If Range("Label_CodLT") = "" Then '\v1.9
+    Err_MsgLTNaoSelecionada = MsgBox("Antes, preencha os cabeçalhos da LT para importar.", vbExclamation, "LT não selecionada") '\v1.9
+    Exit Sub '\v1.9
+End If '\v1.9
 
 If Range("Label_NomeLT").Locked = True Then
     VBA_SAP_Versao = Mid(ThisWorkbook.Name, InStr(ThisWorkbook.Name, "_v") + 2, (InStr(InStr(ThisWorkbook.Name, "_v") + 2, ThisWorkbook.Name, "_") - 1) - (InStr(ThisWorkbook.Name, "_v") + 2) + 1)
@@ -87,7 +87,7 @@ On Error GoTo ErrorDownload
     ActiveWorkbook.Connections("Consulta - BASE_LTs").Refresh
     ActiveWorkbook.Connections("Consulta - BASE_Cabos").Refresh
     ActiveWorkbook.Connections("Consulta - BASE_CabosWithOPGW").Refresh
-    ActiveWorkbook.Connections("Consulta - BASE_Tracoes").Refresh  '/incluído posteriormente
+    ActiveWorkbook.Connections("Consulta - BASE_Tracoes").Refresh  '\incluído posteriormente
     ActiveWorkbook.Connections("Consulta - BASE_BD_OPGWLT").Refresh
     ActiveWorkbook.Connections("Consulta - BASE_BD_SerieEstrutura").Refresh
     ActiveWorkbook.Connections("Consulta - BASE_BD_Aterramento").Refresh
@@ -415,7 +415,7 @@ End If
     If BDIT_Version = 5 Then
         Qtde_SerieEst = Application.WorksheetFunction.CountA(Range("Tab_SerieEstrut[Nome Estrutura]"))
         Qtde_Torres = Application.WorksheetFunction.Sum(Range("Tab_SerieEstrut[Qtde. Total na LT]"))
-        Qtde_SerieEstCircuito = Application.WorksheetFunction.CountA(Range("Tab_SerieEstrutC1[Nome Estrutura]")) '/Corrigido na v1.6
+        Qtde_SerieEstCircuito = Application.WorksheetFunction.CountA(Range("Tab_SerieEstrutC1[Nome Estrutura]")) '\Corrigido na v1.6
             If Qtde_SerieEst <> Qtde_SerieEstCircuito Then
                 GoTo ErroBDIT
             End If
@@ -624,7 +624,7 @@ On Error GoTo 0
 
 
 Application.DisplayAlerts = False
-Workbooks(BaseAux_Nome).Close
+Workbooks(BaseAux_Nome).Close '\Corrigido na v1.9
 Application.DisplayAlerts = True
 
 GoTo BaseAux_OK
@@ -1444,7 +1444,7 @@ Windows(BaseVBA_SAP).Activate
 
 Windows(WBTemp).Close (savechanges = True)
 
-Windows(BaseVBA_SAP).Activate
+Windows(BaseVBA_SAP).Activate '\v.19
 
         Range("Tab_zeq_estru_geral[DESENHO DA LISTA DE CONSTRUÇÃO], Tab_zeq_estru_geral[DESENHO DO PERFIL E PLANTA]").Locked = True
 
@@ -1688,7 +1688,7 @@ Workbooks(BaseVBA_SAP).Activate
 
         Range("Tab_zeq_estru_autop_estai[DESENHO FUNDAÇÃO PÉ]").NumberFormat = "General"
         Range("Tab_zeq_estru_autop_estai[DESENHO FUNDAÇÃO PÉ]").FormulaR1C1 = _
-            "=VLOOKUP(VLOOKUP([@TORRE],'" & LC_NomeLC & "'!ListadeConstrucao[[NumOper]:[FundPernas]],29,0),'" & BaseAux_Nome & "'!TabFunPernas,2,0)"
+            "=VLOOKUP(VLOOKUP([@TORRE],'" & LC_NomeLC & "'!ListadeConstrucao[[NumOper]:[FundPernas]],29,0),'" & BaseAux_Nome & "'!TabFunPernas,2,0)" '\Atualizado na v1.9
         Range("Tab_zeq_estru_autop_estai[DESENHO FUNDAÇÃO PÉ]").NumberFormat = "@"
         Range("Tab_zeq_estru_autop_estai[DESENHO FUNDAÇÃO PÉ]").Value = Range("Tab_zeq_estru_autop_estai[DESENHO FUNDAÇÃO PÉ]").Value
         On Error Resume Next
@@ -1898,7 +1898,7 @@ Workbooks(BaseVBA_SAP).Activate
         Range("Tab_zeq_servidao[DIST VERTIC CABO-TRAVESSIA (m)]").Value = Range("Tab_zeq_servidao[DIST VERTIC CABO-TRAVESSIA (m)]").Value
         
         Range("Tab_zeq_servidao[OBSERVAÇÃO]").FormulaR1C1 = _
-            "=IFERROR(IFERROR(INDEX('" & BaseAux_Nome & "'!TabTravAerea[NomeTravessiaAérea],MATCH([@VÃO],'" & BaseAux_Nome & "'!TabTravAerea[Vão],0)),INDEX('" & BaseAux_Nome & "'!TabTravObs[NomeTravessiaObstáculo],MATCH([@VÃO],'" & BaseAux_Nome & "'!TabTravObs[Vão],0))),""-"")"
+            "=IFERROR(IFERROR(INDEX('" & BaseAux_Nome & "'!TabTravAerea[NomeTravessiaAérea],MATCH([@VÃO],'" & BaseAux_Nome & "'!TabTravAerea[Vão],0)),INDEX('" & BaseAux_Nome & "'!TabTravObs[NomeTravessiaObstáculo],MATCH([@VÃO],'" & BaseAux_Nome & "'!TabTravObs[Vão],0))),""-"")" '\Atualizado na v1.9
         Range("Tab_zeq_servidao[OBSERVAÇÃO]").Value = Range("Tab_zeq_servidao[OBSERVAÇÃO]").Value
 
         On Error Resume Next
@@ -1926,7 +1926,7 @@ Workbooks(BaseVBA_SAP).Activate
 
 'Flechas em "ZLI_ParametrosOp":
 
-Windows(BaseVBA_SAP).Activate
+Windows(BaseVBA_SAP).Activate '\1.9
 
     ActiveWorkbook.Connections("Consulta - Query_CondutorTipico").Refresh
     ActiveWorkbook.Connections("Consulta - Query_PRTipico").Refresh
