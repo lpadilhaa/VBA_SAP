@@ -5,6 +5,16 @@ Public LT_NomeLT As String
 
 Sub Preencher_Dados()
 
+'Obter token:
+    Get_Token = GetGitHubFileContent("lpadilhaa", "VBA_SAP", "main", "APIToken.bas")
+        ActiveWorkbook.Queries.Item("Param_APIToken").Formula = _
+            """" & Get_Token & """ meta [IsParameterQuery=true, Type=""Any""]"
+'Token obtido
+
+If Range("Label_CodLT") = "" Then
+    Err_MsgLTNaoSelecionada = MsgBox("Antes, preencha os cabeçalhos da LT para importar.", vbExclamation, "LT não selecionada")
+    Exit Sub
+End If
 
 If Range("Label_NomeLT").Locked = True Then
     VBA_SAP_Versao = Mid(ThisWorkbook.Name, InStr(ThisWorkbook.Name, "_v") + 2, (InStr(InStr(ThisWorkbook.Name, "_v") + 2, ThisWorkbook.Name, "_") - 1) - (InStr(ThisWorkbook.Name, "_v") + 2) + 1)
@@ -640,7 +650,7 @@ BaseAuxErro = MsgBox("O arquivo selecionado não corresponde à um modelo da Bas
 incorreta_baseaux:
 
 Application.DisplayAlerts = False
-Workbooks("BaseAux_Nome").Close
+Workbooks(BaseAux_Nome).Close
 Application.DisplayAlerts = True
 
 Dim BaseAuxIncorreta As VbMsgBoxResult
@@ -1402,7 +1412,7 @@ Windows(WBTemp).Activate
         "=IF(OR(RC[-4]="""",RC[-4]=""-""),RC[-4],IF(ISNUMBER(VALUE(LEFT(SUBSTITUTE(RC[-4],""-"",""||"",LEN(RC[-4])-LEN(SUBSTITUTE(RC[-4],""-"",""""))),FIND(""||"",SUBSTITUTE(RC[-4],""-"",""||"",LEN(RC[-4])-LEN(SUBSTITUTE(RC[-4],""-"",""""))))-1))),TEXT(LEFT(SUBSTITUTE(RC[-4],""-"",""||"",LEN(RC[-4])-LEN(SUBSTITUTE(RC[-4],""-"",""""))),FIND(""||"",SUBSTITUTE(RC[-4],""-"",""||" & _
         """,LEN(RC[-4])-LEN(SUBSTITUTE(RC[-4],""-"",""""))))-1),""0000000"")&""-FL.""&SUBSTITUTE(RC[-3],VALUE(SUBSTITUTE(RC[-3],SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(RC[-3],0,""""),1,""""),2,""""),3,""""),4,""""),5,""""),6,""""),7,""""),8,""""),9,""""),"""")),TEXT(VALUE(SUBSTITUTE(RC[-3],SUBSTITUTE(SUBST" & _
         "ITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(RC[-3],0,""""),1,""""),2,""""),3,""""),4,""""),5,""""),6,""""),7,""""),8,""""),9,""""),"""")),""000""))&""/""&RIGHT(SUBSTITUTE(RC[-4],""-"",""||"",LEN(RC[-4])-LEN(SUBSTITUTE(RC[-4],""-"",""""))),LEN(SUBSTITUTE(RC[-4],""-"",""||"",LEN(RC[-4])-LEN(SUBSTITUTE(RC[-4],""-"",""""" & _
-    	"))))-FIND(""||"",SUBSTITUTE(RC[-4],""-"",""||"",LEN(RC[-4])-LEN(SUBSTITUTE(RC[-4],""-"",""""))))-1),RC[-4]&""-FL.""&RC[-3]))" '\Corrigido na v1.8
+        "))))-FIND(""||"",SUBSTITUTE(RC[-4],""-"",""||"",LEN(RC[-4])-LEN(SUBSTITUTE(RC[-4],""-"",""""))))-1),RC[-4]&""-FL.""&RC[-3]))" '\Corrigido na v1.8
     Range("G1").FormulaR1C1 = _
         "=IF(OR(RC[-3]="""",RC[-3]=""-""),RC[-3],IF(ISNUMBER(VALUE(LEFT(SUBSTITUTE(RC[-3],""-"",""||"",LEN(RC[-3])-LEN(SUBSTITUTE(RC[-3],""-"",""""))),FIND(""||"",SUBSTITUTE(RC[-3],""-"",""||"",LEN(RC[-3])-LEN(SUBSTITUTE(RC[-3],""-"",""""))))-1))),TEXT(LEFT(SUBSTITUTE(RC[-3],""-"",""||"",LEN(RC[-3])-LEN(SUBSTITUTE(RC[-3],""-"",""""))),FIND(""||"",SUBSTITUTE(RC[-3],""-"",""||" & _
         """,LEN(RC[-3])-LEN(SUBSTITUTE(RC[-3],""-"",""""))))-1),""0000000"")&""-FL.""&SUBSTITUTE(RC[-2],VALUE(SUBSTITUTE(RC[-2],SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(RC[-2],0,""""),1,""""),2,""""),3,""""),4,""""),5,""""),6,""""),7,""""),8,""""),9,""""),"""")),TEXT(VALUE(SUBSTITUTE(RC[-2],SUBSTITUTE(SUBST" & _
@@ -1433,6 +1443,8 @@ Windows(BaseVBA_SAP).Activate
     Sheets("zeq_estru_geral").Range("Tab_zeq_estru_geral[DESENHO DO PERFIL E PLANTA]").Value = Sheets("zeq_estru_geral").Range("Tab_zeq_estru_geral[DESENHO DO PERFIL E PLANTA]").Value
 
 Windows(WBTemp).Close (savechanges = True)
+
+Windows(BaseVBA_SAP).Activate
 
         Range("Tab_zeq_estru_geral[DESENHO DA LISTA DE CONSTRUÇÃO], Tab_zeq_estru_geral[DESENHO DO PERFIL E PLANTA]").Locked = True
 
@@ -1676,8 +1688,7 @@ Workbooks(BaseVBA_SAP).Activate
 
         Range("Tab_zeq_estru_autop_estai[DESENHO FUNDAÇÃO PÉ]").NumberFormat = "General"
         Range("Tab_zeq_estru_autop_estai[DESENHO FUNDAÇÃO PÉ]").FormulaR1C1 = _
-            "=VLOOKUP(LEFT(VLOOKUP([@TORRE],'" & LC_NomeLC & "'!ListadeConstrucao[[NumOper]:[FundPernas]],29,0),IFERROR(FIND(""/"",VLOOKUP([@TORRE],'" & LC_NomeLC & "'!ListadeConstrucao[[NumOper]:[FundPernas]],29,0))-1, " & _
-            "LEN(VLOOKUP([@TORRE], '" & LC_NomeLC & "'!ListadeConstrucao[[NumOper]:[FundPernas]],29,0)))),'" & BaseAux_Nome & "'!TabFunPernas,2,0)"
+            "=VLOOKUP(VLOOKUP([@TORRE],'" & LC_NomeLC & "'!ListadeConstrucao[[NumOper]:[FundPernas]],29,0),'" & BaseAux_Nome & "'!TabFunPernas,2,0)"
         Range("Tab_zeq_estru_autop_estai[DESENHO FUNDAÇÃO PÉ]").NumberFormat = "@"
         Range("Tab_zeq_estru_autop_estai[DESENHO FUNDAÇÃO PÉ]").Value = Range("Tab_zeq_estru_autop_estai[DESENHO FUNDAÇÃO PÉ]").Value
         On Error Resume Next
@@ -1887,7 +1898,7 @@ Workbooks(BaseVBA_SAP).Activate
         Range("Tab_zeq_servidao[DIST VERTIC CABO-TRAVESSIA (m)]").Value = Range("Tab_zeq_servidao[DIST VERTIC CABO-TRAVESSIA (m)]").Value
         
         Range("Tab_zeq_servidao[OBSERVAÇÃO]").FormulaR1C1 = _
-            "=IFERROR(IFERROR(INDEX('" & BaseAux_Nome & "'!TabTravAerea[Observações],MATCH([@VÃO],'" & BaseAux_Nome & "'!TabTravAerea[Vão],0)),INDEX('" & BaseAux_Nome & "'!TabTravObs[Observações],MATCH([@VÃO],'" & BaseAux_Nome & "'!TabTravObs[Vão],0))),""-"")"
+            "=IFERROR(IFERROR(INDEX('" & BaseAux_Nome & "'!TabTravAerea[NomeTravessiaAérea],MATCH([@VÃO],'" & BaseAux_Nome & "'!TabTravAerea[Vão],0)),INDEX('" & BaseAux_Nome & "'!TabTravObs[NomeTravessiaObstáculo],MATCH([@VÃO],'" & BaseAux_Nome & "'!TabTravObs[Vão],0))),""-"")"
         Range("Tab_zeq_servidao[OBSERVAÇÃO]").Value = Range("Tab_zeq_servidao[OBSERVAÇÃO]").Value
 
         On Error Resume Next
@@ -1915,6 +1926,7 @@ Workbooks(BaseVBA_SAP).Activate
 
 'Flechas em "ZLI_ParametrosOp":
 
+Windows(BaseVBA_SAP).Activate
 
     ActiveWorkbook.Connections("Consulta - Query_CondutorTipico").Refresh
     ActiveWorkbook.Connections("Consulta - Query_PRTipico").Refresh
