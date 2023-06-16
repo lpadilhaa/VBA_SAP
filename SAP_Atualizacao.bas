@@ -15,7 +15,30 @@ Sub Atualizar_SAP() '//NUNCA ALTERAR O NOME DA SUB
         ThisWorkbook.VBProject.VBComponents("ProtectUnprotect").CodeModule.ReplaceLine 40, AtivarFiltro 'v1.8
     
         ActiveWindow.DisplayWorkbookTabs = False 'v1.6
-            
+
+
+EditModuloEditQuery: 'v1.9
+    On Error GoTo CriarModuloEditQuery 'v1.9
+        newCode3 = GetGitHubFileContent("lpadilhaa", "VBA_SAP", "main", "EditQuery.bas") 'v1.9
+                    ThisWorkbook.VBProject.VBComponents("x_EditQuery").CodeModule.DeleteLines 1, ThisWorkbook.VBProject.VBComponents("x_EditQuery").CodeModule.CountOfLines 'v1.9
+                    ThisWorkbook.VBProject.VBComponents("x_EditQuery").CodeModule.InsertLines 1, newCode 'v1.9
+        Set newCode3 = Nothing 'v1.9
+    On Error GoTo -1 'v1.9
+    On Error GoTo 0 'v1.9
+    GoTo cnt 'v1.9
+    
+CriarModuloEditQuery: 'v1.9
+        On Error GoTo -1 'v1.9
+        On Error GoTo 0 'v1.9
+            ThisWorkbook.VBProject.VBComponents.Add(vbext_ct_StdModule).Name = "x_EditQuery" 'v1.9
+        GoTo EditModuloEditQuery 'v1.9
+cnt: 'v1.9
+    Call EditarConsultas 'v1.9
+
+
+
+'Atualização de SAP já gerados:
+
     If Range("Label_NomeLT").Locked = True Then
         
     Sheets("zeq_cadeia_isol").Unprotect (StrConv(Base64Decode("UGFkaWxoYUgyTSo="), vbUnicode))
@@ -69,3 +92,5 @@ Sub Atualizar_SAP() '//NUNCA ALTERAR O NOME DA SUB
     End If
 
 End Sub
+
+
