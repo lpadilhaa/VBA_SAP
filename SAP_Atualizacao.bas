@@ -47,7 +47,7 @@ Sub Atualizar_SAP() '//NUNCA ALTERAR O NOME DA SUB
 'Atualização da consulta "BASE_BD_ProjetosLT" (necessário que fosse realizado à parte)
     oldFormula = ActiveWorkbook.Queries.Item("BASE_BD_ProjetosLT").Formula
     If InStr(oldFormula, "Param_APIToken]]") = 0 Then
-    newFormula = Replace(oldFormula, ")),", ", [Headers=[Authorization=Param_APIToken]])),")
+    newFormula = Replace(oldFormula, "api/projeto_lt/listar"")),", "api/projeto_lt/listar"", [Headers=[Authorization=Param_APIToken]])),")
     ActiveWorkbook.Queries.Item("BASE_BD_ProjetosLT").Formula = newFormula
     End If
 
