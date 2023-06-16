@@ -28,7 +28,7 @@ Sub Atualizar_SAP() '//NUNCA ALTERAR O NOME DA SUB
     Dim consultas As Variant 'v1.9
     consultas = Array("Query_TorresAtivasVinculadas", "Query_Dominio_FundacaoPe", "Query_Dominio_FundacaoMastro", "Query_Dominio_FundacaoEstai", "BASE_BD_TorresLT", _
                       "Query_ID_zeq_cadeia_isol_lt_fase_2", "Query_ID_zeq_cadeia_isol_lt_fase_3", "Query_ID_zeq_condutor_fase2", "Query_ID_zeq_condutor_fase3", _
-                      "Query_ID_zeq_pararaio_direito", "Query_ID_zeq_opgw_direito", "BASE_BD_OPGWLT", "BASE_BD_SerieEstrutura", "BASE_BD_Aterramento", "BASE_BD_ParaRaiosLT", "BASE_BD_ProjetosLT", "BASE_BD_VaosLT", _
+                      "Query_ID_zeq_pararaio_direito", "Query_ID_zeq_opgw_direito", "BASE_BD_OPGWLT", "BASE_BD_SerieEstrutura", "BASE_BD_Aterramento", "BASE_BD_ParaRaiosLT", "BASE_BD_VaosLT", _
                       "Query_ID_zlis", "Query_ID_zeq_estru_geral", "Query_ID_zeq_estru_autop", "Query_ID_zeq_estru_estai", "Query_ID_zeq_cadeia_isol", "Query_ID_zeq_aterramento", _
                       "Query_ID_zeq_condutor", "Query_ID_zeq_pararaio", "Query_ID_zeq_opgw", "Query_ID_zeq_servidao")  'v1.9
     
@@ -44,6 +44,12 @@ Sub Atualizar_SAP() '//NUNCA ALTERAR O NOME DA SUB
         End If 'v1.9
     Next i 'v1.9
 
+'Atualização da consulta "BASE_BD_ProjetosLT" (necessário que fosse realizado à parte)
+    oldFormula = ActiveWorkbook.Queries.Item("BASE_BD_ProjetosLT").Formula
+    If InStr(oldFormula, "Param_APIToken]]") = 0 Then
+    newFormula = Replace(oldFormula, ")),", ", [Headers=[Authorization=Param_APIToken]])),")
+    ActiveWorkbook.Queries.Item("BASE_BD_ProjetosLT").Formula = newFormula
+    End If
 
 'Atualização de SAP já gerados:
 
