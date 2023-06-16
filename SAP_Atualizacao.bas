@@ -33,7 +33,7 @@ CriarModuloEditQuery: 'v1.9
             ThisWorkbook.VBProject.VBComponents.Add(vbext_ct_StdModule).Name = "x_EditQuery" 'v1.9
         GoTo EditModuloEditQuery 'v1.9
 cnt: 'v1.9
-    Call EditarConsultas 'v1.9
+    'Call EditarConsultas 'v1.9
 
 
 
