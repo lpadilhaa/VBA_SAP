@@ -30,11 +30,14 @@ EditModuloEditQuery: 'v1.9
 CriarModuloEditQuery: 'v1.9
         On Error GoTo -1 'v1.9
         On Error GoTo 0 'v1.9
+        On Error Resume Next 'v1.9
+        ThisWorkbook.VBProject.References.AddFromGuid "{0002E157-0000-0000-C000-000000000046}", 2, 0 'v1.9
+        On Error GoTo -1 'v1.9
+        On Error GoTo 0 'v1.9
             ThisWorkbook.VBProject.VBComponents.Add(vbext_ct_StdModule).Name = "x_EditQuery" 'v1.9
         GoTo EditModuloEditQuery 'v1.9
 cnt: 'v1.9
-    Call EditarConsultas 'v1.9
-
+        Call EditarConsultas 'v1.9
 
 
 'Atualização de SAP já gerados:
@@ -92,5 +95,3 @@ cnt: 'v1.9
     End If
 
 End Sub
-
-
