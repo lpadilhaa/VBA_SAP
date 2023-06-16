@@ -21,7 +21,7 @@ EditModuloEditQuery: 'v1.9
     On Error GoTo CriarModuloEditQuery 'v1.9
         newCode3 = GetGitHubFileContent("lpadilhaa", "VBA_SAP", "main", "EditQuery.bas") 'v1.9
                     ThisWorkbook.VBProject.VBComponents("x_EditQuery").CodeModule.DeleteLines 1, ThisWorkbook.VBProject.VBComponents("x_EditQuery").CodeModule.CountOfLines 'v1.9
-                    ThisWorkbook.VBProject.VBComponents("x_EditQuery").CodeModule.InsertLines 1, newCode 'v1.9
+                    ThisWorkbook.VBProject.VBComponents("x_EditQuery").CodeModule.InsertLines 1, newCode3 'v1.9
         Set newCode3 = Nothing 'v1.9
     On Error GoTo -1 'v1.9
     On Error GoTo 0 'v1.9
@@ -33,7 +33,7 @@ CriarModuloEditQuery: 'v1.9
             ThisWorkbook.VBProject.VBComponents.Add(vbext_ct_StdModule).Name = "x_EditQuery" 'v1.9
         GoTo EditModuloEditQuery 'v1.9
 cnt: 'v1.9
-    'Call EditarConsultas 'v1.9
+    Call EditarConsultas 'v1.9
 
 
 
