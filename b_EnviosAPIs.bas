@@ -3094,10 +3094,10 @@ Application.ScreenUpdating = True
 
 TempoFim = Now()
 
-    If Qtde_Erros = "" Then
+    If Qtde_Erros = "" Then 'prego
         MsgLog = "Dados de " & APIAtual & " da LT " & CodLT & " enviados para o banco de dados com sucesso!" & Chr(13) & Chr(13) & _
-        "Total de vãos: " & Chr(13) & _
-        Chr(13) & _
+        "Total de vãos: " & QtdeVaos & _
+        Chr(13) & Chr(13) & _
         "Tempo de execução: " & TimeValue(Format(TempoFim - TempoInicio, "dd/mm/yyyy hh:mm:ss"))
         
         If LoadAll = "" Then
