@@ -17,27 +17,32 @@ Sub Atualizar_SAP() '//NUNCA ALTERAR O NOME DA SUB
         ActiveWindow.DisplayWorkbookTabs = False 'v1.6
 
 
-EditModuloEditQuery: 'v1.9
-    On Error GoTo CriarModuloEditQuery 'v1.9
-        newCode3 = GetGitHubFileContent("lpadilhaa", "VBA_SAP", "main", "EditQuery.bas") 'v1.9
-                    ThisWorkbook.VBProject.VBComponents("x_EditQuery").CodeModule.DeleteLines 1, ThisWorkbook.VBProject.VBComponents("x_EditQuery").CodeModule.CountOfLines 'v1.9
-                    ThisWorkbook.VBProject.VBComponents("x_EditQuery").CodeModule.InsertLines 1, newCode3 'v1.9
-        Set newCode3 = Nothing 'v1.9
-    On Error GoTo -1 'v1.9
-    On Error GoTo 0 'v1.9
-    GoTo cnt 'v1.9
+    On Error Resume Next
+        ActiveWorkbook.Queries.Add Name:="Param_APIToken", Formula:= _
+            """X"" meta [IsParameterQuery=true, Type=""Any"", IsParameterQueryRequired=true]" 'v1.9
+        ActiveWorkbook.Queries.Item("Param_APIToken").Formula = _
+            """X"" meta [IsParameterQuery=true, Type=""Any"", IsParameterQueryRequired=True]" 'v1.9
+    On Error GoTo -1
+    On Error GoTo 0
     
-CriarModuloEditQuery: 'v1.9
-        On Error GoTo -1 'v1.9
-        On Error GoTo 0 'v1.9
-        On Error Resume Next 'v1.9
-        ThisWorkbook.VBProject.References.AddFromGuid "{0002E157-0000-0000-C000-000000000046}", 2, 0 'v1.9
-        On Error GoTo -1 'v1.9
-        On Error GoTo 0 'v1.9
-            ThisWorkbook.VBProject.VBComponents.Add(vbext_ct_StdModule).Name = "x_EditQuery" 'v1.9
-        GoTo EditModuloEditQuery 'v1.9
-cnt: 'v1.9
-        Call EditarConsultas 'v1.9
+    Dim consultas As Variant 'v1.9
+    consultas = Array("Query_TorresAtivasVinculadas", "Query_Dominio_FundacaoPe", "Query_Dominio_FundacaoMastro", "Query_Dominio_FundacaoEstai", "BASE_BD_TorresLT", _
+                      "Query_ID_zeq_cadeia_isol_lt_fase_2", "Query_ID_zeq_cadeia_isol_lt_fase_3", "Query_ID_zeq_condutor_fase2", "Query_ID_zeq_condutor_fase3", _
+                      "Query_ID_zeq_pararaio_direito", "Query_ID_zeq_opgw_direito", "BASE_BD_OPGWLT", "BASE_BD_SerieEstrutura", "BASE_BD_Aterramento", "BASE_BD_ParaRaiosLT", "BASE_BD_ProjetosLT", "BASE_BD_VaosLT", _
+                      "Query_ID_zlis", "Query_ID_zeq_estru_geral", "Query_ID_zeq_estru_autop", "Query_ID_zeq_estru_estai", "Query_ID_zeq_cadeia_isol", "Query_ID_zeq_aterramento", _
+                      "Query_ID_zeq_condutor", "Query_ID_zeq_pararaio", "Query_ID_zeq_opgw", "Query_ID_zeq_servidao")  'v1.9
+    
+    Dim i As Long 'v1.9
+    Dim oldFormula As String 'v1.9
+    Dim newFormula As String 'v1.9
+    
+    For i = LBound(consultas) To UBound(consultas) 'v1.9
+        oldFormula = ActiveWorkbook.Queries.Item(consultas(i)).Formula 'v1.9
+        If InStr(oldFormula, "Param_APIToken]]") = 0 Then 'v1.9
+            newFormula = Replace(oldFormula, ")),", ", [Headers=[Authorization=Param_APIToken]])),") 'v1.9
+            ActiveWorkbook.Queries.Item(consultas(i)).Formula = newFormula 'v1.9
+        End If 'v1.9
+    Next i 'v1.9
 
 
 'Atualização de SAP já gerados:
