@@ -1522,7 +1522,7 @@ Sheets("Menu").Activate
     Sheets("zeq_condutor").Range("Tab_zeq_condutor[QUANTIDADE DE ESPAÇADORES]").FormulaR1C1 = "=IFERROR(ROUND(INDEX('" & LC_NomeLC & "'!ListadeConstrucao[QtdEA],MATCH(INDEX(BASE_BD_VaosLT[torre_numero_torre_1]," & _
             "MATCH([@VÃO],BASE_BD_VaosLT[identificacao_vao],0)),'" & LC_NomeLC & "'!ListadeConstrucao[NumOper],0))/COUNTIF([VÃO],[@VÃO]),0),""-"")"
     Sheets("zeq_condutor").Range("Tab_zeq_condutor[QUANTIDADE DE ESPAÇADORES]").Value = Sheets("zeq_condutor").Range("Tab_zeq_condutor[QUANTIDADE DE ESPAÇADORES]").Value
-    Range("Tab_zeq_condutor[QUANTIDADE DE ESPAÇADORES]").Replace 0, ""
+    Range("Tab_zeq_condutor[QUANTIDADE DE ESPAÇADORES]").Replace 0, "", xlWhole '\Corrigido na v1.9.1
         
         Set CellsErros = Sheets("zeq_condutor").Range("Tab_zeq_condutor[QUANTIDADE DE ESPAÇADORES]")
         On Error Resume Next
