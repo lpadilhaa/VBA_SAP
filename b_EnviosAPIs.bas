@@ -7,6 +7,11 @@ Public TempoFimAll As Date
 
 Sub LoadToAPI_All()
 
+'Obter token: '\v1.9.1
+    Get_Token = GetGitHubFileContent("lpadilhaa", "VBA_SAP", "main", "APIToken.bas") '\v1.9.1
+        ActiveWorkbook.Queries.Item("Param_APIToken").Formula = _
+            """" & Get_Token & """ meta [IsParameterQuery=true, Type=""Any""]" '\v1.9.1
+'Token obtido '\v1.9.1
 
 If Range("Label_NomeLT").Locked = False Then
     MsgNaoImportado = MsgBox("Importe os dados da LT e realize o preenchimento completo antes de enviar para o banco de dados", vbExclamation, "Dados não importados")
@@ -48,6 +53,14 @@ End Sub
 
 
 Sub LoadToAPI_zli_transmissao()
+
+If LoadAll = "" Then
+'Obter token: '\v1.9.1
+    Get_Token = GetGitHubFileContent("lpadilhaa", "VBA_SAP", "main", "APIToken.bas") '\v1.9.1
+        ActiveWorkbook.Queries.Item("Param_APIToken").Formula = _
+            """" & Get_Token & """ meta [IsParameterQuery=true, Type=""Any""]" '\v1.9.1
+'Token obtido '\v1.9.1
+End If
 
 If Range("Label_NomeLT").Locked = False Then
     MsgNaoImportado = MsgBox("Importe os dados da LT e realize o preenchimento completo antes de enviar para o banco de dados", vbExclamation, "Dados não importados")
@@ -294,6 +307,13 @@ End Sub
 
 Sub LoadToAPI_zli_parametros_op()
 
+If LoadAll = "" Then
+'Obter token: '\v1.9.1
+    Get_Token = GetGitHubFileContent("lpadilhaa", "VBA_SAP", "main", "APIToken.bas") '\v1.9.1
+        ActiveWorkbook.Queries.Item("Param_APIToken").Formula = _
+            """" & Get_Token & """ meta [IsParameterQuery=true, Type=""Any""]" '\v1.9.1
+'Token obtido '\v1.9.1
+End If
 
 If Range("Label_NomeLT").Locked = False Then
     MsgNaoImportado = MsgBox("Importe os dados da LT e realize o preenchimento completo antes de enviar para o banco de dados", vbExclamation, "Dados não importados")
@@ -596,6 +616,13 @@ End Sub
 
 Sub LoadToAPI_zeq_estru_geral()
 
+If LoadAll = "" Then
+'Obter token: '\v1.9.1
+    Get_Token = GetGitHubFileContent("lpadilhaa", "VBA_SAP", "main", "APIToken.bas") '\v1.9.1
+        ActiveWorkbook.Queries.Item("Param_APIToken").Formula = _
+            """" & Get_Token & """ meta [IsParameterQuery=true, Type=""Any""]" '\v1.9.1
+'Token obtido '\v1.9.1
+End If
 
 If Range("Label_NomeLT").Locked = False Then
     MsgNaoImportado = MsgBox("Importe os dados da LT e realize o preenchimento completo antes de enviar para o banco de dados", vbExclamation, "Dados não importados")
@@ -985,6 +1012,13 @@ End Sub
 
 Sub LoadToAPI_zeq_estru_autop()
 
+If LoadAll = "" Then
+'Obter token: '\v1.9.1
+    Get_Token = GetGitHubFileContent("lpadilhaa", "VBA_SAP", "main", "APIToken.bas") '\v1.9.1
+        ActiveWorkbook.Queries.Item("Param_APIToken").Formula = _
+            """" & Get_Token & """ meta [IsParameterQuery=true, Type=""Any""]" '\v1.9.1
+'Token obtido '\v1.9.1
+End If
 
 If Range("Label_NomeLT").Locked = False Then
     MsgNaoImportado = MsgBox("Importe os dados da LT e realize o preenchimento completo antes de enviar para o banco de dados", vbExclamation, "Dados não importados")
@@ -1266,6 +1300,13 @@ End Sub
 
 Sub LoadToAPI_zeq_cadeia_isol()
 
+If LoadAll = "" Then
+'Obter token: '\v1.9.1
+    Get_Token = GetGitHubFileContent("lpadilhaa", "VBA_SAP", "main", "APIToken.bas") '\v1.9.1
+        ActiveWorkbook.Queries.Item("Param_APIToken").Formula = _
+            """" & Get_Token & """ meta [IsParameterQuery=true, Type=""Any""]" '\v1.9.1
+'Token obtido '\v1.9.1
+End If
 
 If Range("Label_NomeLT").Locked = False Then
     MsgNaoImportado = MsgBox("Importe os dados da LT e realize o preenchimento completo antes de enviar para o banco de dados", vbExclamation, "Dados não importados")
@@ -1573,6 +1614,13 @@ End Sub
 
 Sub LoadToAPI_zeq_aterramento()
 
+If LoadAll = "" Then
+'Obter token: '\v1.9.1
+    Get_Token = GetGitHubFileContent("lpadilhaa", "VBA_SAP", "main", "APIToken.bas") '\v1.9.1
+        ActiveWorkbook.Queries.Item("Param_APIToken").Formula = _
+            """" & Get_Token & """ meta [IsParameterQuery=true, Type=""Any""]" '\v1.9.1
+'Token obtido '\v1.9.1
+End If
 
 If Range("Label_NomeLT").Locked = False Then
     MsgNaoImportado = MsgBox("Importe os dados da LT e realize o preenchimento completo antes de enviar para o banco de dados", vbExclamation, "Dados não importados")
@@ -1822,6 +1870,13 @@ End Sub
 
 Sub LoadToAPI_zeq_acessos()
 
+If LoadAll = "" Then
+'Obter token: '\v1.9.1
+    Get_Token = GetGitHubFileContent("lpadilhaa", "VBA_SAP", "main", "APIToken.bas") '\v1.9.1
+        ActiveWorkbook.Queries.Item("Param_APIToken").Formula = _
+            """" & Get_Token & """ meta [IsParameterQuery=true, Type=""Any""]" '\v1.9.1
+'Token obtido '\v1.9.1
+End If
 
 If Range("Label_NomeLT").Locked = False Then
     MsgNaoImportado = MsgBox("Importe os dados da LT e realize o preenchimento completo antes de enviar para o banco de dados", vbExclamation, "Dados não importados")
@@ -1843,6 +1898,13 @@ End Sub
 
 Sub LoadToAPI_zeq_condutor()
 
+If LoadAll = "" Then
+'Obter token: '\v1.9.1
+    Get_Token = GetGitHubFileContent("lpadilhaa", "VBA_SAP", "main", "APIToken.bas") '\v1.9.1
+        ActiveWorkbook.Queries.Item("Param_APIToken").Formula = _
+            """" & Get_Token & """ meta [IsParameterQuery=true, Type=""Any""]" '\v1.9.1
+'Token obtido '\v1.9.1
+End If
 
 If Range("Label_NomeLT").Locked = False Then
     MsgNaoImportado = MsgBox("Importe os dados da LT e realize o preenchimento completo antes de enviar para o banco de dados", vbExclamation, "Dados não importados")
@@ -2180,6 +2242,13 @@ End Sub
 
 Sub LoadToAPI_zeq_pararaio()
 
+If LoadAll = "" Then
+'Obter token: '\v1.9.1
+    Get_Token = GetGitHubFileContent("lpadilhaa", "VBA_SAP", "main", "APIToken.bas") '\v1.9.1
+        ActiveWorkbook.Queries.Item("Param_APIToken").Formula = _
+            """" & Get_Token & """ meta [IsParameterQuery=true, Type=""Any""]" '\v1.9.1
+'Token obtido '\v1.9.1
+End If
 
 If Range("Label_NomeLT").Locked = False Then
     MsgNaoImportado = MsgBox("Importe os dados da LT e realize o preenchimento completo antes de enviar para o banco de dados", vbExclamation, "Dados não importados")
@@ -2512,6 +2581,13 @@ End Sub
 
 Sub LoadToAPI_zeq_opgw()
 
+If LoadAll = "" Then
+'Obter token: '\v1.9.1
+    Get_Token = GetGitHubFileContent("lpadilhaa", "VBA_SAP", "main", "APIToken.bas") '\v1.9.1
+        ActiveWorkbook.Queries.Item("Param_APIToken").Formula = _
+            """" & Get_Token & """ meta [IsParameterQuery=true, Type=""Any""]" '\v1.9.1
+'Token obtido '\v1.9.1
+End If
 
 If Range("Label_NomeLT").Locked = False Then
     MsgNaoImportado = MsgBox("Importe os dados da LT e realize o preenchimento completo antes de enviar para o banco de dados", vbExclamation, "Dados não importados")
@@ -2798,6 +2874,13 @@ End Sub
 
 Sub LoadToAPI_zeq_servidao()
 
+If LoadAll = "" Then
+'Obter token: '\v1.9.1
+    Get_Token = GetGitHubFileContent("lpadilhaa", "VBA_SAP", "main", "APIToken.bas") '\v1.9.1
+        ActiveWorkbook.Queries.Item("Param_APIToken").Formula = _
+            """" & Get_Token & """ meta [IsParameterQuery=true, Type=""Any""]" '\v1.9.1
+'Token obtido '\v1.9.1
+End If
 
 If Range("Label_NomeLT").Locked = False Then
     MsgNaoImportado = MsgBox("Importe os dados da LT e realize o preenchimento completo antes de enviar para o banco de dados", vbExclamation, "Dados não importados")
@@ -3171,5 +3254,4 @@ End If
 FimGeral:
 
 End Sub
-
 
