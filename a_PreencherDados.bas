@@ -122,17 +122,6 @@ If Range("BASE_BD_ProjetosLT[qtde_total_vaos]").Rows(1).Value <> Application.Wor
 
 End If
 
-If Application.WorksheetFunction.CountIf(Range("BASE_BD_TorresLTGeral[caracteristica2]"), "Estaiada") >= 1 Then
-
-    Dim PossuiEstaiadas As VbMsgBoxResult
-        PossuiEstaiadas = MsgBox("A LT selecionada possui torres estaiadas, qual o código para preenchimento automático dos dados ainda está em desenvolvimento. " & _
-                "Portanto, ainda não será possível preencher os dados da LT " & LT_CodLT & "." _
-        & Chr(13) & Chr(13) & _
-        "Selecione outra LT ou aguarde a finalização do código.", vbCritical, "Torres estaiadas - em desenvolvimento!")
-        Exit Sub
-
-End If
-
 
 GoTo Inicio_Selecionar_LC
 
@@ -897,9 +886,6 @@ Range("Tab_zeq_estru_geral[MATERIAL CONSTRUTIVO]").Rows(1).Activate
 Range("Tab_zeq_estru_geral[TIPO DE CIRCUITO]").Rows(1).Activate
     ActiveCell.Range("A1:A" & QtdeEstruturasTabTorresBD).Value = Range("BASE_BD_TorresLTGeral[tipo_circuito]").Value
 
-Range("Tab_zeq_estru_geral[ALTURA MISULA (m)]").Rows(1).Activate
-    ActiveCell.Range("A1:A" & QtdeEstruturasTabTorresBD).Value = Range("BASE_BD_TorresLTGeral[altura_torre]").Value
-
 Range("Tab_zeq_estru_geral[ALTITUDE]").Rows(1).Activate
     ActiveCell.Range("A1:A" & QtdeEstruturasTabTorresBD).Value = Range("BASE_BD_TorresLTGeral[altitude]").Value
 
@@ -1449,38 +1435,60 @@ Windows(BaseVBA_SAP).Activate '\v.19
         Range("Tab_zeq_estru_geral[DESENHO DA LISTA DE CONSTRUÇÃO], Tab_zeq_estru_geral[DESENHO DO PERFIL E PLANTA]").Locked = True
 
 
-    Sheets("zeq_estru_autop&estai").Range("Tab_zeq_estru_autop_estai[EXTENSÃO (m)]").FormulaR1C1 = "=INDEX('" & LC_NomeLC & "'!ListadeConstrucao[ExtTorre],MATCH([@[TORRE]],'" & LC_NomeLC & "'!ListadeConstrucao[NumOper],0))"
+    Sheets("zeq_estru_autop&estai").Range("Tab_zeq_estru_autop_estai[EXTENSÃO (m)]").FormulaR1C1 = _
+        "=IF(INDEX(Tab_zeq_estru_geral[TIPO DE ESTRUTURA DE LINHA],MATCH([@TORRE],Tab_zeq_estru_geral[NÚMERO DE OPERAÇÃO],0))=""Estaiada"",""-"",INDEX('" & LC_NomeLC & "'!ListadeConstrucao[ExtTorre],MATCH([@[TORRE]],'" & LC_NomeLC & "'!ListadeConstrucao[NumOper],0)))" '\Ajuste na v2.0
     Sheets("zeq_estru_autop&estai").Range("Tab_zeq_estru_autop_estai[EXTENSÃO (m)]").Value = Sheets("zeq_estru_autop&estai").Range("Tab_zeq_estru_autop_estai[EXTENSÃO (m)]").Value
 
-    Sheets("zeq_estru_autop&estai").Range("Tab_zeq_estru_autop_estai[ALTURA PERNA A (m)]").FormulaR1C1 = "=INDEX('" & LC_NomeLC & "'!ListadeConstrucao[PernaA],MATCH([@[TORRE]],'" & LC_NomeLC & "'!ListadeConstrucao[NumOper],0))"
+    Sheets("zeq_estru_autop&estai").Range("Tab_zeq_estru_autop_estai[ALTURA PERNA A (m)]").FormulaR1C1 = _
+        "=IF(INDEX(Tab_zeq_estru_geral[TIPO DE ESTRUTURA DE LINHA],MATCH([@TORRE],Tab_zeq_estru_geral[NÚMERO DE OPERAÇÃO],0))=""Estaiada"",""-"",INDEX('" & LC_NomeLC & "'!ListadeConstrucao[PernaA],MATCH([@[TORRE]],'" & LC_NomeLC & "'!ListadeConstrucao[NumOper],0)))" '\Ajuste na v2.0
     Sheets("zeq_estru_autop&estai").Range("Tab_zeq_estru_autop_estai[ALTURA PERNA A (m)]").Value = Sheets("zeq_estru_autop&estai").Range("Tab_zeq_estru_autop_estai[ALTURA PERNA A (m)]").Value
 
-    Sheets("zeq_estru_autop&estai").Range("Tab_zeq_estru_autop_estai[ALTURA PERNA B (m)]").FormulaR1C1 = "=INDEX('" & LC_NomeLC & "'!ListadeConstrucao[PernaB],MATCH([@[TORRE]],'" & LC_NomeLC & "'!ListadeConstrucao[NumOper],0))"
+    Sheets("zeq_estru_autop&estai").Range("Tab_zeq_estru_autop_estai[ALTURA PERNA B (m)]").FormulaR1C1 = _
+        "=IF(INDEX(Tab_zeq_estru_geral[TIPO DE ESTRUTURA DE LINHA],MATCH([@TORRE],Tab_zeq_estru_geral[NÚMERO DE OPERAÇÃO],0))=""Estaiada"",""-"",INDEX('" & LC_NomeLC & "'!ListadeConstrucao[PernaB],MATCH([@[TORRE]],'" & LC_NomeLC & "'!ListadeConstrucao[NumOper],0)))" '\Ajuste na v2.0
     Sheets("zeq_estru_autop&estai").Range("Tab_zeq_estru_autop_estai[ALTURA PERNA B (m)]").Value = Sheets("zeq_estru_autop&estai").Range("Tab_zeq_estru_autop_estai[ALTURA PERNA B (m)]").Value
 
-    Sheets("zeq_estru_autop&estai").Range("Tab_zeq_estru_autop_estai[ALTURA PERNA C (m)]").FormulaR1C1 = "=INDEX('" & LC_NomeLC & "'!ListadeConstrucao[PernaC],MATCH([@[TORRE]],'" & LC_NomeLC & "'!ListadeConstrucao[NumOper],0))"
+    Sheets("zeq_estru_autop&estai").Range("Tab_zeq_estru_autop_estai[ALTURA PERNA C (m)]").FormulaR1C1 = _
+        "=IF(INDEX(Tab_zeq_estru_geral[TIPO DE ESTRUTURA DE LINHA],MATCH([@TORRE],Tab_zeq_estru_geral[NÚMERO DE OPERAÇÃO],0))=""Estaiada"",""-"",INDEX('" & LC_NomeLC & "'!ListadeConstrucao[PernaC],MATCH([@[TORRE]],'" & LC_NomeLC & "'!ListadeConstrucao[NumOper],0)))" '\Ajuste na v2.0
     Sheets("zeq_estru_autop&estai").Range("Tab_zeq_estru_autop_estai[ALTURA PERNA C (m)]").Value = Sheets("zeq_estru_autop&estai").Range("Tab_zeq_estru_autop_estai[ALTURA PERNA C (m)]").Value
 
-    Sheets("zeq_estru_autop&estai").Range("Tab_zeq_estru_autop_estai[ALTURA PERNA D (m)]").FormulaR1C1 = "=INDEX('" & LC_NomeLC & "'!ListadeConstrucao[PernaD],MATCH([@[TORRE]],'" & LC_NomeLC & "'!ListadeConstrucao[NumOper],0))"
+    Sheets("zeq_estru_autop&estai").Range("Tab_zeq_estru_autop_estai[ALTURA PERNA D (m)]").FormulaR1C1 = _
+        "=IF(INDEX(Tab_zeq_estru_geral[TIPO DE ESTRUTURA DE LINHA],MATCH([@TORRE],Tab_zeq_estru_geral[NÚMERO DE OPERAÇÃO],0))=""Estaiada"",""-"",INDEX('" & LC_NomeLC & "'!ListadeConstrucao[PernaD],MATCH([@[TORRE]],'" & LC_NomeLC & "'!ListadeConstrucao[NumOper],0)))" '\Ajuste na v2.0
     Sheets("zeq_estru_autop&estai").Range("Tab_zeq_estru_autop_estai[ALTURA PERNA D (m)]").Value = Sheets("zeq_estru_autop&estai").Range("Tab_zeq_estru_autop_estai[ALTURA PERNA D (m)]").Value
 
-    Sheets("zeq_estru_autop&estai").Range("Tab_zeq_estru_autop_estai[PERNA DE REFERÊNCIA]").FormulaR1C1 = "=INDEX('" & LC_NomeLC & "'!ListadeConstrucao[PernaRef],MATCH([@[TORRE]],'" & LC_NomeLC & "'!ListadeConstrucao[NumOper],0))"
+    Sheets("zeq_estru_autop&estai").Range("Tab_zeq_estru_autop_estai[PERNA DE REFERÊNCIA]").FormulaR1C1 = _
+        "=IF(INDEX(Tab_zeq_estru_geral[TIPO DE ESTRUTURA DE LINHA],MATCH([@TORRE],Tab_zeq_estru_geral[NÚMERO DE OPERAÇÃO],0))=""Estaiada"",""-"",INDEX('" & LC_NomeLC & "'!ListadeConstrucao[PernaRef],MATCH([@[TORRE]],'" & LC_NomeLC & "'!ListadeConstrucao[NumOper],0)))" '\Ajuste na v2.0
     Sheets("zeq_estru_autop&estai").Range("Tab_zeq_estru_autop_estai[PERNA DE REFERÊNCIA]").Value = Sheets("zeq_estru_autop&estai").Range("Tab_zeq_estru_autop_estai[PERNA DE REFERÊNCIA]").Value
 
 Sheets("zeq_estru_autop&estai").Activate
-    Sheets("zeq_estru_autop&estai").Range("Tab_zeq_estru_autop_estai[DELTA H (m)]").FormulaR1C1 = "=INDEX('" & LC_NomeLC & "'!ListadeConstrucao[ElevacaoPernaRef],MATCH([@[TORRE]],'" & LC_NomeLC & "'!ListadeConstrucao[NumOper],0))"
+    Sheets("zeq_estru_autop&estai").Range("Tab_zeq_estru_autop_estai[DELTA H (m)]").FormulaR1C1 = _
+        "=IF(INDEX(Tab_zeq_estru_geral[TIPO DE ESTRUTURA DE LINHA],MATCH([@TORRE],Tab_zeq_estru_geral[NÚMERO DE OPERAÇÃO],0))=""Estaiada"",""-"",INDEX('" & LC_NomeLC & "'!ListadeConstrucao[ElevacaoPernaRef],MATCH([@[TORRE]],'" & LC_NomeLC & "'!ListadeConstrucao[NumOper],0)))" '\Ajuste na v2.0
     Sheets("zeq_estru_autop&estai").Range("Tab_zeq_estru_autop_estai[DELTA H (m)]").Value = Sheets("zeq_estru_autop&estai").Range("Tab_zeq_estru_autop_estai[DELTA H (m)]").Value
     Range("Tab_zeq_estru_autop_estai[DELTA H (m)]").Value = Evaluate("IFERROR(" & Range("Tab_zeq_estru_autop_estai[DELTA H (m)]").Address & "-100, ""-"")")
-Sheets("Menu").Activate
     
     Range("Tab_zeq_estru_autop_estai[EXTENSÃO (m)], Tab_zeq_estru_autop_estai[ALTURA PERNA A (m)], Tab_zeq_estru_autop_estai[ALTURA PERNA B (m)], Tab_zeq_estru_autop_estai[ALTURA PERNA C (m)], Tab_zeq_estru_autop_estai[ALTURA PERNA D (m)]").Locked = True
     Range("Tab_zeq_estru_autop_estai[PERNA DE REFERÊNCIA], Tab_zeq_estru_autop_estai[DELTA H (m)]").Locked = True
 
 
-'//TEMPORÁRIO (INÍCIO)**************************************************************************
-    Range("Tab_zeq_estru_autop_estai[[EXTENSÃO MASTRO A (m)]:[TRAÇÃO ESTAI (kgf)]]").Value = "-"
-    Range("Tab_zeq_estru_autop_estai[[EXTENSÃO MASTRO A (m)]:[TRAÇÃO ESTAI (kgf)]]").Locked = True
-'//TEMPORÁRIO (FIM)*****************************************************************************
+
+    Sheets("zeq_estru_autop&estai").Range("Tab_zeq_estru_autop_estai[COMPRIMENTO ESTAI A (m)]").FormulaR1C1 = _
+        "=IF(INDEX(Tab_zeq_estru_geral[TIPO DE ESTRUTURA DE LINHA],MATCH([@TORRE],Tab_zeq_estru_geral[NÚMERO DE OPERAÇÃO],0))=""Autoportante"",""-"",INDEX('" & LC_NomeLC & "'!ListadeConstrucao[PernaA],MATCH([@[TORRE]],'" & LC_NomeLC & "'!ListadeConstrucao[NumOper],0)))" '\Incluído na v2.0
+    Sheets("zeq_estru_autop&estai").Range("Tab_zeq_estru_autop_estai[COMPRIMENTO ESTAI A (m)]").Value = Sheets("zeq_estru_autop&estai").Range("Tab_zeq_estru_autop_estai[COMPRIMENTO ESTAI A (m)]").Value '\Incluído na v2.0
+
+    Sheets("zeq_estru_autop&estai").Range("Tab_zeq_estru_autop_estai[COMPRIMENTO ESTAI B (m)]").FormulaR1C1 = _
+        "=IF(INDEX(Tab_zeq_estru_geral[TIPO DE ESTRUTURA DE LINHA],MATCH([@TORRE],Tab_zeq_estru_geral[NÚMERO DE OPERAÇÃO],0))=""Autoportante"",""-"",INDEX('" & LC_NomeLC & "'!ListadeConstrucao[PernaB],MATCH([@[TORRE]],'" & LC_NomeLC & "'!ListadeConstrucao[NumOper],0)))" '\Incluído na v2.0
+    Sheets("zeq_estru_autop&estai").Range("Tab_zeq_estru_autop_estai[COMPRIMENTO ESTAI B (m)]").Value = Sheets("zeq_estru_autop&estai").Range("Tab_zeq_estru_autop_estai[COMPRIMENTO ESTAI B (m)]").Value '\Incluído na v2.0
+
+    Sheets("zeq_estru_autop&estai").Range("Tab_zeq_estru_autop_estai[COMPRIMENTO ESTAI C (m)]").FormulaR1C1 = _
+        "=IF(INDEX(Tab_zeq_estru_geral[TIPO DE ESTRUTURA DE LINHA],MATCH([@TORRE],Tab_zeq_estru_geral[NÚMERO DE OPERAÇÃO],0))=""Autoportante"",""-"",INDEX('" & LC_NomeLC & "'!ListadeConstrucao[PernaC],MATCH([@[TORRE]],'" & LC_NomeLC & "'!ListadeConstrucao[NumOper],0)))" '\Incluído na v2.0
+    Sheets("zeq_estru_autop&estai").Range("Tab_zeq_estru_autop_estai[COMPRIMENTO ESTAI C (m)]").Value = Sheets("zeq_estru_autop&estai").Range("Tab_zeq_estru_autop_estai[COMPRIMENTO ESTAI C (m)]").Value '\Incluído na v2.0
+
+    Sheets("zeq_estru_autop&estai").Range("Tab_zeq_estru_autop_estai[COMPRIMENTO ESTAI D (m)]").FormulaR1C1 = _
+        "=IF(INDEX(Tab_zeq_estru_geral[TIPO DE ESTRUTURA DE LINHA],MATCH([@TORRE],Tab_zeq_estru_geral[NÚMERO DE OPERAÇÃO],0))=""Autoportante"",""-"",INDEX('" & LC_NomeLC & "'!ListadeConstrucao[PernaD],MATCH([@[TORRE]],'" & LC_NomeLC & "'!ListadeConstrucao[NumOper],0)))" '\Incluído na v2.0
+    Sheets("zeq_estru_autop&estai").Range("Tab_zeq_estru_autop_estai[COMPRIMENTO ESTAI D (m)]").Value = Sheets("zeq_estru_autop&estai").Range("Tab_zeq_estru_autop_estai[COMPRIMENTO ESTAI D (m)]").Value '\Incluído na v2.0
+
+    Range("Tab_zeq_estru_autop_estai[COMPRIMENTO ESTAI A (m)], Tab_zeq_estru_autop_estai[COMPRIMENTO ESTAI B (m)], Tab_zeq_estru_autop_estai[COMPRIMENTO ESTAI C (m)], Tab_zeq_estru_autop_estai[COMPRIMENTO ESTAI D (m)]").Locked = True '\Incluído na v2.0
+
+
 
     Sheets("zeq_condutor").Range("Tab_zeq_condutor[QUANTIDADE AMORTECEDORES]").FormulaR1C1 = "=IFERROR(ROUND(INDEX('" & LC_NomeLC & "'!ListadeConstrucao[QtdAmort],MATCH(INDEX(BASE_BD_VaosLT[torre_numero_torre_1]," & _
             "MATCH([@VÃO],BASE_BD_VaosLT[identificacao_vao],0)),'" & LC_NomeLC & "'!ListadeConstrucao[NumOper],0))/COUNTIF([VÃO],[@VÃO]),0),""-"")"
@@ -1659,8 +1667,8 @@ Workbooks(BaseVBA_SAP).Activate
     Sheets("zeq_estru_geral").Activate
     
         Range("Tab_zeq_estru_geral[ALTURA MISULA (m)]").FormulaR1C1 = _
-            "=IFERROR(IF([@SILHUETA]=""-"",""-"",VLOOKUP([@SILHUETA],'" & BaseAux_Nome & "'!TabTorres,8,0)+VLOOKUP([@[NÚMERO DE OPERAÇÃO]],Tab_zeq_estru_autop_estai,2,0)+VLOOKUP([@[NÚMERO DE OPERAÇÃO]],Tab_zeq_estru_autop_estai,IF(VLOOKUP([@[NÚMERO DE OPERAÇÃO]],Tab_zeq_estru_autop_estai,7,0)=""A"",3,IF(VLOOKUP([@[NÚMERO DE OPERAÇÃO]],Tab_zeq_estru_autop_estai" & _
-            ",7,0)=""B"",4,IF(VLOOKUP([@[NÚMERO DE OPERAÇÃO]],Tab_zeq_estru_autop_estai,7,0)=""C"",5,IF(VLOOKUP([@[NÚMERO DE OPERAÇÃO]],Tab_zeq_estru_autop_estai,7,0)=""D"",6,0)))),0)),"""")"
+            "=IFERROR(IF([@SILHUETA]=""-"",""-"",IF([@[TIPO DE ESTRUTURA DE LINHA]]=""Estaiada"",VLOOKUP([@[NÚMERO DE OPERAÇÃO]],'" & LC_NomeLC & "'!ListadeConstrucao[[NumOper]:[AlturaUtilTorre]],18,0),VLOOKUP([@SILHUETA],'" & BaseAux_Nome & "'!TabTorres,8,0)+VLOOKUP([@[NÚMERO DE OPERAÇÃO]],Tab_zeq_estru_autop_estai,2,0)+VLOOKUP([@[NÚMERO DE OPERAÇÃO]],Tab_zeq_estru_autop_estai,IF(VLOOKUP([@[NÚMERO DE OPERAÇÃO]],Tab_zeq_estru_autop_estai,7,0)=""A"",3,IF(VLOOKUP([@[NÚMERO DE OPERAÇÃO]],Tab_zeq_estru_autop_estai" & _
+            ",7,0)=""B"",4,IF(VLOOKUP([@[NÚMERO DE OPERAÇÃO]],Tab_zeq_estru_autop_estai,7,0)=""C"",5,IF(VLOOKUP([@[NÚMERO DE OPERAÇÃO]],Tab_zeq_estru_autop_estai,7,0)=""D"",6,0)))),0))),"""")" '\Ajuste na v2.0
         Range("Tab_zeq_estru_geral[ALTURA MISULA (m)]").Value = Range("Tab_zeq_estru_geral[ALTURA MISULA (m)]").Value
         
         Range("Tab_zeq_estru_geral[ALTURA TOTAL (m)]").FormulaR1C1 = _
@@ -1688,7 +1696,7 @@ Workbooks(BaseVBA_SAP).Activate
 
         Range("Tab_zeq_estru_autop_estai[DESENHO FUNDAÇÃO PÉ]").NumberFormat = "General"
         Range("Tab_zeq_estru_autop_estai[DESENHO FUNDAÇÃO PÉ]").FormulaR1C1 = _
-            "=VLOOKUP(VLOOKUP([@TORRE],'" & LC_NomeLC & "'!ListadeConstrucao[[NumOper]:[FundPernas]],29,0),'" & BaseAux_Nome & "'!TabFunPernas,2,0)" '\Atualizado na v1.9
+            "=IF(INDEX(Tab_zeq_estru_geral[TIPO DE ESTRUTURA DE LINHA],MATCH([@TORRE],Tab_zeq_estru_geral[NÚMERO DE OPERAÇÃO],0))=""Estaiada"",""-"",VLOOKUP(VLOOKUP([@TORRE],'" & LC_NomeLC & "'!ListadeConstrucao[[NumOper]:[FundPernas]],29,0),'" & BaseAux_Nome & "'!TabFunPernas,2,0))" '\Atualizado na v2.0
         Range("Tab_zeq_estru_autop_estai[DESENHO FUNDAÇÃO PÉ]").NumberFormat = "@"
         Range("Tab_zeq_estru_autop_estai[DESENHO FUNDAÇÃO PÉ]").Value = Range("Tab_zeq_estru_autop_estai[DESENHO FUNDAÇÃO PÉ]").Value
         On Error Resume Next
@@ -1697,6 +1705,37 @@ Workbooks(BaseVBA_SAP).Activate
         On Error GoTo 0
 
         Range("Tab_zeq_estru_autop_estai[DESENHO FUNDAÇÃO PÉ]").Locked = True
+        
+        
+        
+        Range("Tab_zeq_estru_autop_estai[EXTENSÃO MASTRO A (m)]").FormulaR1C1 = _
+            "=IF(VLOOKUP([@TORRE],Tab_zeq_estru_geral,4,0)=""Autoportante"",""-"",VLOOKUP(VLOOKUP([@TORRE],Tab_zeq_estru_geral,3,0),'" & BaseAux_Nome & "'!TabTorres[#Data],8,0)+VLOOKUP([@TORRE],'" & LC_NomeLC & "'!ListadeConstrucao[[NumOper]:[ExtTorre]],19,0))" '\Incluso na v2.0
+        Range("Tab_zeq_estru_autop_estai[EXTENSÃO MASTRO A (m)]").Value = Range("Tab_zeq_estru_autop_estai[EXTENSÃO MASTRO A (m)]").Value '\Incluso na v2.0
+        
+        Range("Tab_zeq_estru_autop_estai[EXTENSÃO MASTRO B (m)]").FormulaR1C1 = _
+            "=IF(VLOOKUP([@TORRE],Tab_zeq_estru_geral,4,0)=""Autoportante"",""-"",IF(INDEX(BASE_BD_TorresLTAutopEstai[qtde_mastros],MATCH([@TORRE],BASE_BD_TorresLTAutopEstai[numero_torre],0))<=1,""-""," & _
+            "VLOOKUP(VLOOKUP([@TORRE],Tab_zeq_estru_geral,3,0),'" & BaseAux_Nome & "'!TabTorres[#Data],8,0)+VLOOKUP([@TORRE],'" & LC_NomeLC & "'!ListadeConstrucao[[NumOper]:[ExtTorre]],19,0)))" '\Incluso na v2.0
+        Range("Tab_zeq_estru_autop_estai[EXTENSÃO MASTRO B (m)]").Value = Range("Tab_zeq_estru_autop_estai[EXTENSÃO MASTRO B (m)]").Value '\Incluso na v2.0
+        
+        Range("Tab_zeq_estru_autop_estai[DESENHO FUNDAÇÃO MASTRO]").NumberFormat = "General" '\Incluso na v2.0
+        Range("Tab_zeq_estru_autop_estai[DESENHO FUNDAÇÃO MASTRO]").FormulaR1C1 = _
+            "=IF(VLOOKUP([@TORRE],Tab_zeq_estru_geral,4,0)=""Autoportante"",""-"",VLOOKUP(VLOOKUP([@TORRE],'" & LC_NomeLC & "'!ListadeConstrucao[[NumOper]:[FundCentral]],28,0),'" & BaseAux_Nome & "'!TabFunMastro[#Data],2,0))" '\Incluso na v2.0
+        Range("Tab_zeq_estru_autop_estai[DESENHO FUNDAÇÃO MASTRO]").NumberFormat = "@" '\Incluso na v2.0
+        Range("Tab_zeq_estru_autop_estai[DESENHO FUNDAÇÃO MASTRO]").Value = Range("Tab_zeq_estru_autop_estai[DESENHO FUNDAÇÃO MASTRO]").Value '\Incluso na v2.0
+        
+        Range("Tab_zeq_estru_autop_estai[DESENHO FUNDAÇÃO ESTAI]").NumberFormat = "General" '\Incluso na v2.0
+        Range("Tab_zeq_estru_autop_estai[DESENHO FUNDAÇÃO ESTAI]").FormulaR1C1 = _
+            "=IF(VLOOKUP([@TORRE],Tab_zeq_estru_geral,4,0)=""Autoportante"",""-"",VLOOKUP(VLOOKUP([@TORRE],'" & LC_NomeLC & "'!ListadeConstrucao[[NumOper]:[FundPernas]],29,0),'" & BaseAux_Nome & "'!TabFunEstai[#Data],2,0))" '\Incluso na v2.0
+        Range("Tab_zeq_estru_autop_estai[DESENHO FUNDAÇÃO ESTAI]").NumberFormat = "@" '\Incluso na v2.0
+        Range("Tab_zeq_estru_autop_estai[DESENHO FUNDAÇÃO ESTAI]").Value = Range("Tab_zeq_estru_autop_estai[DESENHO FUNDAÇÃO ESTAI]").Value '\Incluso na v2.0
+        
+        On Error Resume Next
+            Range("Tab_zeq_estru_autop_estai[[DESENHO FUNDAÇÃO MASTRO]:[DESENHO FUNDAÇÃO ESTAI]]").Replace What:="0", Replacement:=vbNullString, LookAt:=xlWhole '\Incluso na v2.0
+        On Error GoTo -1
+        On Error GoTo 0
+        
+        Range("Tab_zeq_estru_autop_estai[EXTENSÃO MASTRO A (m)], Tab_zeq_estru_autop_estai[EXTENSÃO MASTRO B (m)], Tab_zeq_estru_autop_estai[DESENHO FUNDAÇÃO MASTRO], Tab_zeq_estru_autop_estai[DESENHO FUNDAÇÃO ESTAI]").Locked = True '\Incluso na v2.0
+        
         
         Sheets("zeq_estru_autop&estai").Protect DrawingObjects:=True, Contents:=True, Scenarios:=True, AllowFiltering:=True, Password:=StrConv(Base64Decode("UGFkaWxoYUgyTSo="), vbUnicode)
 
