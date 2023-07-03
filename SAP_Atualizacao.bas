@@ -11,6 +11,11 @@ Sub Atualizar_SAP() '//NUNCA ALTERAR O NOME DA SUB
                     ThisWorkbook.VBProject.VBComponents("b_EnviosAPIs").CodeModule.InsertLines 1, newCode2 'v1.6
         Set newCode2 = Nothing 'v1.6
 
+        newCode3 = GetGitHubFileContent("lpadilhaa", "VBA_SAP", "main", "c_Logs.bas") 'v2.0
+                    ThisWorkbook.VBProject.VBComponents("c_Logs").CodeModule.DeleteLines 1, ThisWorkbook.VBProject.VBComponents("c_Logs").CodeModule.CountOfLines 'v2.0
+                    ThisWorkbook.VBProject.VBComponents("c_Logs").CodeModule.InsertLines 1, newCode3 'v2.0
+        Set newCode3 = Nothing 'v2.0
+
         AtivarFiltro = Replace(ThisWorkbook.VBProject.VBComponents("ProtectUnprotect").CodeModule.Lines(40, 1), "AllowFiltering:=False", "AllowFiltering:=True") 'v1.8
         ThisWorkbook.VBProject.VBComponents("ProtectUnprotect").CodeModule.ReplaceLine 40, AtivarFiltro 'v1.8
     
