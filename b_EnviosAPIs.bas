@@ -1044,6 +1044,10 @@ Valida_QtdeTorres = Application.WorksheetFunction.CountA(Range("Tab_zeq_estru_au
 Valida_QtdeTorresAutop = Application.WorksheetFunction.CountIf(Range("Tab_zeq_estru_autop_estai[PERNA DE REFERÊNCIA]"), "<>-") 'v2.0
 Valida_QtdeTorresEstai = Application.WorksheetFunction.CountIf(Range("Tab_zeq_estru_autop_estai[EXTENSÃO MASTRO A (m)]"), "<>-") 'v2.0
 
+If Valida_QtdeTorresAutop = 0 Then 'v2.0
+GoTo Finalizar 'v2.0
+End If 'v2.0
+
 If LoadAll = "1" Then
     Unload UserForm_EnviandoAPI
     UserForm_EnviandoAPI.Label1.Caption = "Enviando: " & APIAtual
@@ -1064,10 +1068,6 @@ If Valida_QtdeTorresAutop + Valida_QtdeTorresEstai <> Valida_QtdeTorres Then 'v2
     MsgErroAutopEstai = MsgBox("A quantidade de torres na tabela ""(ZEQ) Estrutura Autoportante / Estaiada"" não corresponde a soma das torres Autoportantes e Estaiadas da mesma tabela." _
         & Chr(13) & Chr(13) & "Revise as informações, corrija-as nas fontes e tente novamente.", vbCritical, "Erro de validação: (ZEQ) Estrutura Autoportante/Estaiada") 'v2.0
     Exit Sub 'v2.0
-End If 'v2.0
-
-If Valida_QtdeTorresAutop = 0 Then 'v2.0
-GoTo Finalizar 'v2.0
 End If 'v2.0
 
 Iniciar_zeq_estru_autop:
@@ -1352,6 +1352,10 @@ Valida_QtdeTorres = Application.WorksheetFunction.CountA(Range("Tab_zeq_estru_au
 Valida_QtdeTorresAutop = Application.WorksheetFunction.CountIf(Range("Tab_zeq_estru_autop_estai[PERNA DE REFERÊNCIA]"), "<>-")
 Valida_QtdeTorresEstai = Application.WorksheetFunction.CountIf(Range("Tab_zeq_estru_autop_estai[EXTENSÃO MASTRO A (m)]"), "<>-")
 
+If Valida_QtdeTorresEstai = 0 Then
+GoTo Finalizar
+End If
+
 If LoadAll = "1" Then
     Unload UserForm_EnviandoAPI
     UserForm_EnviandoAPI.Label1.Caption = "Enviando: " & APIAtual
@@ -1371,10 +1375,6 @@ If Valida_QtdeTorresAutop + Valida_QtdeTorresEstai <> Valida_QtdeTorres Then
     MsgErroAutopEstai = MsgBox("A quantidade de torres na tabela ""(ZEQ) Estrutura Autoportante / Estaiada"" não corresponde a soma das torres Autoportantes e Estaiadas da mesma tabela." _
         & Chr(13) & Chr(13) & "Revise as informações, corrija-as nas fontes e tente novamente.", vbCritical, "Erro de validação: (ZEQ) Estrutura Autoportante/Estaiada")
     Exit Sub
-End If
-
-If Valida_QtdeTorresEstai = 0 Then
-GoTo Finalizar
 End If
 
 Iniciar_zeq_estru_estai:
