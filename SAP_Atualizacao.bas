@@ -56,6 +56,24 @@ Sub Atualizar_SAP() '//NUNCA ALTERAR O NOME DA SUB
     ActiveWorkbook.Queries.Item("BASE_BD_ProjetosLT").Formula = newFormula
     End If
 
+
+'Atualização de consultas para implantação da automatização de torres estaiadas: '\v2.0
+
+    oldFormula = ActiveWorkbook.Queries.Item("BASE_BD_TorresLT").Formula
+    If InStr(oldFormula, ", ""qtde_mastros""}") = 0 Then
+    newFormula = Replace(oldFormula, ", ""sistema_aterramento_rural_id""}", ", ""sistema_aterramento_rural_id"", ""qtde_mastros""}")
+    ActiveWorkbook.Queries.Item("BASE_BD_TorresLT").Formula = newFormula
+    End If
+
+    oldFormula = ActiveWorkbook.Queries.Item("BASE_BD_TorresLTAutopEstai").Formula
+    If InStr(oldFormula, ", ""qtde_mastros"", ") = 0 Then
+    newFormula = Replace(oldFormula, ", ""fundacao_pe4"", ""fundacao_mastro1"", ", ", ""fundacao_pe4"", ""qtde_mastros"", ""fundacao_mastro1"", ")
+    ActiveWorkbook.Queries.Item("BASE_BD_TorresLTAutopEstai").Formula = newFormula
+    End If
+
+
+Exit Sub
+
 'Atualização de SAP já gerados:
 
     If Range("Label_NomeLT").Locked = True Then
