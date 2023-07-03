@@ -1729,6 +1729,24 @@ Workbooks(BaseVBA_SAP).Activate
         Range("Tab_zeq_estru_autop_estai[DESENHO FUNDAÇÃO ESTAI]").NumberFormat = "@" '\Incluso na v2.0
         Range("Tab_zeq_estru_autop_estai[DESENHO FUNDAÇÃO ESTAI]").Value = Range("Tab_zeq_estru_autop_estai[DESENHO FUNDAÇÃO ESTAI]").Value '\Incluso na v2.0
         
+        
+        Range("Tab_zeq_estru_autop_estai[TIPO CABO ESTAI]").NumberFormat = "General" '\Incluso na v2.0.1
+        Range("Tab_zeq_estru_autop_estai[TIPO CABO ESTAI]").FormulaR1C1 = _
+            "=IF(VLOOKUP([@TORRE],Tab_zeq_estru_geral,4,0)=""Autoportante"",""-"","""")" '\Incluso na v2.0.1
+        Range("Tab_zeq_estru_autop_estai[TIPO CABO ESTAI]").NumberFormat = "@" '\Incluso na v2.0.1
+        Range("Tab_zeq_estru_autop_estai[TIPO CABO ESTAI]").Value = Range("Tab_zeq_estru_autop_estai[TIPO CABO ESTAI]").Value '\Incluso na v2.0.1
+        
+        Range("Tab_zeq_estru_autop_estai[TRAÇÃO ESTAI (kgf)]").FormulaR1C1 = _
+            "=IF(VLOOKUP([@TORRE],Tab_zeq_estru_geral,4,0)=""Autoportante"",""-"","""")" '\Incluso na v2.0.1
+        Range("Tab_zeq_estru_autop_estai[TRAÇÃO ESTAI (kgf)]").Value = Range("Tab_zeq_estru_autop_estai[TRAÇÃO ESTAI (kgf)]").Value '\Incluso na v2.0.1
+        
+            For Each cel In Sheets("zeq_estru_autop&estai").Range("Tab_zeq_estru_autop_estai[TIPO CABO ESTAI], Tab_zeq_estru_autop_estai[TRAÇÃO ESTAI (kgf)]") '\Incluso na v2.0.1
+                If cel.Value <> "" Then '\Incluso na v2.0.1
+                    cel.Locked = True '\Incluso na v2.0.1
+                End If '\Incluso na v2.0.1
+            Next cel '\Incluso na v2.0.1
+        
+        
         On Error Resume Next
             Range("Tab_zeq_estru_autop_estai[[DESENHO FUNDAÇÃO MASTRO]:[DESENHO FUNDAÇÃO ESTAI]]").Replace What:="0", Replacement:=vbNullString, LookAt:=xlWhole '\Incluso na v2.0
         On Error GoTo -1
