@@ -35,7 +35,19 @@ filter_ctn:
             Next tbl
         End If
     Next ws
-        
+
+
+Valida_QtdeTorres = Application.WorksheetFunction.CountA(Range("Tab_zeq_estru_autop_estai[TORRE]")) 'v2.0
+Valida_QtdeTorresAutop = Application.WorksheetFunction.CountIf(Range("Tab_zeq_estru_autop_estai[PERNA DE REFERÊNCIA]"), "<>-") 'v2.0
+Valida_QtdeTorresEstai = Application.WorksheetFunction.CountIf(Range("Tab_zeq_estru_autop_estai[EXTENSÃO MASTRO A (m)]"), "<>-") 'v2.0
+
+If Valida_QtdeTorresAutop + Valida_QtdeTorresEstai <> Valida_QtdeTorres Then 'v2.0
+    MsgErroAutopEstai = MsgBox("A quantidade de torres na tabela ""(ZEQ) Estrutura Autoportante / Estaiada"" não corresponde a soma das torres Autoportantes e Estaiadas da mesma tabela." _
+        & Chr(13) & Chr(13) & "Revise as informações, corrija-as nas fontes e tente novamente.", vbCritical, "Erro de validação: (ZEQ) Estrutura Autoportante/Estaiada") 'v2.0
+    Exit Sub 'v2.0
+End If 'v2.0
+
+
 Dim MsgLoad_All As VbMsgBoxResult
 
 MsgLoad_All = MsgBox("Deseja enviar todos os dados para o banco de dados?" & vbCrLf & vbCrLf & _
@@ -1028,6 +1040,10 @@ End If
 APIAtual = "ZEQ_ESTRUTURA_AUTOPORTANTE"
 CodLT = Range("Label_CodLT")
 
+Valida_QtdeTorres = Application.WorksheetFunction.CountA(Range("Tab_zeq_estru_autop_estai[TORRE]")) 'v2.0
+Valida_QtdeTorresAutop = Application.WorksheetFunction.CountIf(Range("Tab_zeq_estru_autop_estai[PERNA DE REFERÊNCIA]"), "<>-") 'v2.0
+Valida_QtdeTorresEstai = Application.WorksheetFunction.CountIf(Range("Tab_zeq_estru_autop_estai[EXTENSÃO MASTRO A (m)]"), "<>-") 'v2.0
+
 If LoadAll = "1" Then
     Unload UserForm_EnviandoAPI
     UserForm_EnviandoAPI.Label1.Caption = "Enviando: " & APIAtual
@@ -1043,6 +1059,16 @@ For Each tbl In ActiveSheet.ListObjects
     End If
 Next tbl
 
+
+If Valida_QtdeTorresAutop + Valida_QtdeTorresEstai <> Valida_QtdeTorres Then 'v2.0
+    MsgErroAutopEstai = MsgBox("A quantidade de torres na tabela ""(ZEQ) Estrutura Autoportante / Estaiada"" não corresponde a soma das torres Autoportantes e Estaiadas da mesma tabela." _
+        & Chr(13) & Chr(13) & "Revise as informações, corrija-as nas fontes e tente novamente.", vbCritical, "Erro de validação: (ZEQ) Estrutura Autoportante/Estaiada") 'v2.0
+    Exit Sub 'v2.0
+End If 'v2.0
+
+If Valida_QtdeTorresAutop = 0 Then 'v2.0
+GoTo Finalizar 'v2.0
+End If 'v2.0
 
 Iniciar_zeq_estru_autop:
 
@@ -1078,7 +1104,8 @@ Application.ScreenUpdating = False
 
 TempoInicio = Now()
 
-QtdeTorres = WorksheetFunction.CountA(Range("Tab_zeq_estru_autop_estai[TORRE]"))
+QtdeTorres = Valida_QtdeTorres 'v2.0
+QtdeTorresAutop = Valida_QtdeTorresAutop 'v2.0
 
     ActiveWorkbook.Connections("Consulta - Query_ID_zeq_estru_autop").Refresh
     Unload UserForm_EnviandoAPI
@@ -1101,6 +1128,9 @@ Repete = 1
 
 Do While Repete <= QtdeTorres
 
+If Range("Tab_zeq_estru_autop_estai[PERNA DE REFERÊNCIA]").Rows(Repete) = "-" Then 'v2.0
+GoTo Proximo 'v2.0
+End If 'v2.0
 
 NumOP = Range("Tab_zeq_estru_autop_estai[TORRE]").Rows(Repete).text
     
@@ -1215,6 +1245,8 @@ End Select
         
     End If
 
+
+Proximo: 'v2.0
     Repete = Repete + 1
 
 
@@ -1239,7 +1271,397 @@ TempoFim = Now()
 
     If Qtde_Erros = "" Then
         MsgLog = "Dados de " & APIAtual & " da LT " & CodLT & " enviados para o banco de dados com sucesso!" & Chr(13) & Chr(13) & _
-        "Total de torres: " & QtdeTorres & _
+        "Total de torres: " & QtdeTorresAutop & _
+        Chr(13) & Chr(13) & _
+        "Tempo de execução: " & TimeValue(Format(TempoFim - TempoInicio, "dd/mm/yyyy hh:mm:ss")) 'Ajustado na v2.0
+        
+        If LoadAll = "" Then
+            ShowMsgLog = MsgBox(MsgLog, vbInformation, "Sucesso!")
+        End If
+            IdErro = 0
+               
+    Else:
+        MsgLog = Qtde_Erros & " torre(s) não foi(oram) enviada(s): " & Chr(13) & Chr(13) & _
+        OP_Erros & Chr(13) & Chr(13) & _
+        "Verifique os dados e tente novamente." & _
+        Chr(13) & Chr(13) & _
+        "Tempo de execução: " & TimeValue(Format(TempoFim - TempoInicio, "dd/mm/yyyy hh:mm:ss"))
+        
+        If LoadAll = "" Then
+            ShowMsgLog = MsgBox(MsgLog, vbCritical, "Erro(s)!")
+        End If
+            IdErro = 1
+    End If
+
+
+'Gerando registro de log:
+
+        On Error GoTo AddNewLog
+            RowLog = Application.WorksheetFunction.Match(APIAtual, Range("TabLogErros[API]"), 0)
+                Range("TabLogErros[API]").Rows(RowLog).Value = APIAtual
+                Range("TabLogErros[Erro]").Rows(RowLog).Value = IdErro
+                Range("TabLogErros[Início]").Rows(RowLog).Value = TempoInicio
+                Range("TabLogErros[Fim]").Rows(RowLog).Value = TempoFim
+                Range("TabLogErros[Msg]").Rows(RowLog).Value = MsgLog
+            GoTo Finalizar
+AddNewLog:
+        On Error GoTo -1
+        On Error GoTo 0
+                Range("TabLogErros[API]").SpecialCells(xlCellTypeBlanks).Rows(1).Value = APIAtual
+                Range("TabLogErros[Erro]").SpecialCells(xlCellTypeBlanks).Rows(1).Value = IdErro
+                Range("TabLogErros[Início]").SpecialCells(xlCellTypeBlanks).Rows(1).Value = TempoInicio
+                Range("TabLogErros[Fim]").SpecialCells(xlCellTypeBlanks).Rows(1).Value = TempoFim
+                Range("TabLogErros[Msg]").SpecialCells(xlCellTypeBlanks).Rows(1).Value = MsgLog
+
+        
+Finalizar:
+ActiveWorkbook.Save
+
+    On Error GoTo -1
+    On Error GoTo 0
+
+If Valida_QtdeTorresEstai = 0 Then '\Atualizado na v2.0
+    If LoadAll = "1" Then
+        Call LoadToAPI_zeq_cadeia_isol
+    End If
+Else: '\Atualizado na v2.0
+    Call LoadToAPI_zeq_estru_estai
+End If
+
+End Sub
+
+Sub LoadToAPI_zeq_estru_estai() '\Sub criada na v2.0
+
+If LoadAll = "" Then
+'Obter token:
+    Get_Token = GetGitHubFileContent("lpadilhaa", "VBA_SAP", "main", "APIToken.bas")
+        ActiveWorkbook.Queries.Item("Param_APIToken").Formula = _
+            """" & Get_Token & """ meta [IsParameterQuery=true, Type=""Any""]"
+'Token obtido
+End If
+
+If Range("Label_NomeLT").Locked = False Then
+    MsgNaoImportado = MsgBox("Importe os dados da LT e realize o preenchimento completo antes de enviar para o banco de dados", vbExclamation, "Dados não importados")
+    Exit Sub
+End If
+
+APIAtual = "ZEQ_ESTRUTURA_ESTAIADA"
+CodLT = Range("Label_CodLT")
+
+Valida_QtdeTorres = Application.WorksheetFunction.CountA(Range("Tab_zeq_estru_autop_estai[TORRE]"))
+Valida_QtdeTorresAutop = Application.WorksheetFunction.CountIf(Range("Tab_zeq_estru_autop_estai[PERNA DE REFERÊNCIA]"), "<>-")
+Valida_QtdeTorresEstai = Application.WorksheetFunction.CountIf(Range("Tab_zeq_estru_autop_estai[EXTENSÃO MASTRO A (m)]"), "<>-")
+
+If LoadAll = "1" Then
+    Unload UserForm_EnviandoAPI
+    UserForm_EnviandoAPI.Label1.Caption = "Enviando: " & APIAtual
+    UserForm_EnviandoAPI.Show vbModeless
+    GoTo Iniciar
+End If
+
+
+For Each tbl In ActiveSheet.ListObjects
+    If tbl.AutoFilter.FilterMode Then
+        MsgBox "Há filtros ativos na planilha." & Chr(13) & Chr(13) & "Remova-o e confira os dados antes de enviar.", vbExclamation
+        Exit Sub
+    End If
+Next tbl
+
+If Valida_QtdeTorresAutop + Valida_QtdeTorresEstai <> Valida_QtdeTorres Then
+    MsgErroAutopEstai = MsgBox("A quantidade de torres na tabela ""(ZEQ) Estrutura Autoportante / Estaiada"" não corresponde a soma das torres Autoportantes e Estaiadas da mesma tabela." _
+        & Chr(13) & Chr(13) & "Revise as informações, corrija-as nas fontes e tente novamente.", vbCritical, "Erro de validação: (ZEQ) Estrutura Autoportante/Estaiada")
+    Exit Sub
+End If
+
+If Valida_QtdeTorresEstai = 0 Then
+GoTo Finalizar
+End If
+
+Iniciar_zeq_estru_estai:
+
+Dim MsgLoad_zeq_estru_autop As VbMsgBoxResult
+
+MsgLoad_zeq_estru_autop = MsgBox("Deseja enviar os dados para o banco de dados, na API ""zeq_estru_estai""?" _
+    , vbInformation + vbYesNo + vbDefaultButton2, "Enviar dados para ""zeq_estru_estai""?")
+
+If MsgLoad_zeq_estru_autop = vbNo Then
+    
+    If LoadAll = "1" Then
+        Dim MsgLoad_zeq_estru_autop_reask As VbMsgBoxResult
+
+        MsgLoad_zeq_estru_autop_reask = MsgBox("Deseja mesmo cancelar o envio dos dados para o banco de dados, na API ""zeq_estru_estai""?" & vbCrLf & vbCrLf & _
+            "ATENÇÃO: O envio de todas as ZLI's e ZEQ's pendentes serão canceladas, e as que já foram enviadas serão mantidas.", vbExclamation + vbYesNo + vbDefaultButton2, "Cancelar envio para ""zeq_estru_estai""?")
+        
+        If MsgLoad_zeq_estru_autop_reask = vbNo Then
+            GoTo Iniciar_zeq_estru_estai
+        ElseIf MsgLoad_zeq_estru_estai_reask = vbYes Then
+            MsgLoadCancel = MsgBox("Envio de dados para o banco de dados cancelado!", vbCritical, "Cancelado!")
+            Exit Sub
+        End If
+    End If
+    
+    Exit Sub
+
+End If
+
+
+Iniciar:
+
+Application.ScreenUpdating = False
+
+TempoInicio = Now()
+
+QtdeTorres = Valida_QtdeTorres
+QtdeTorresEstai = Valida_QtdeTorresEstai
+
+    ActiveWorkbook.Connections("Consulta - Query_ID_zeq_estru_estai").Refresh
+    Unload UserForm_EnviandoAPI
+
+
+Dim get_extensao_mastro_a As Variant
+Dim get_extensao_mastro_b As Variant
+Dim get_comprimento_estai_a As Variant
+Dim get_comprimento_estai_b As Variant
+Dim get_comprimento_estai_c As Variant
+Dim get_comprimento_estai_d As Variant
+Dim get_d_fundacao_mastro_id As String
+Dim get_d_fundacao_estai_a_id As String
+Dim get_d_fundacao_estai_b_id As String
+Dim get_d_fundacao_estai_c_id As String
+Dim get_d_fundacao_estai_d_id As String
+Dim get_desenho_fundacao_mastro As String
+Dim get_desenho_fundacao_estai As String
+Dim get_tipo_cabo_estai As String
+Dim get_tracao_estai As Variant
+
+        Get_Token = GetGitHubFileContent("lpadilhaa", "VBA_SAP", "main", "APIToken.bas")
+
+Dim Repete As Integer
+Repete = 1
+
+Do While Repete <= QtdeTorres
+
+If Range("Tab_zeq_estru_autop_estai[EXTENSÃO MASTRO A (m)]").Rows(Repete) = "-" Then
+GoTo Proximo
+End If
+
+NumOP = Range("Tab_zeq_estru_autop_estai[TORRE]").Rows(Repete).text
+    
+sequencia_num_torre = Application.Match(NumOP, Range("Query_ID_zeq_estru_estai[numero_torre]"), 0)
+
+ID = Range("Query_ID_zeq_estru_estai[ID_zeq_estru_estai]").Rows(sequencia_num_torre)
+
+
+get_extensao_mastro_a = Range("Tab_zeq_estru_autop_estai[EXTENSÃO MASTRO A (m)]").Rows(Repete).Value
+get_extensao_mastro_b = Range("Tab_zeq_estru_autop_estai[EXTENSÃO MASTRO B (m)]").Rows(Repete).Value
+get_comprimento_estai_a = Range("Tab_zeq_estru_autop_estai[COMPRIMENTO ESTAI A (m)]").Rows(Repete).Value
+get_comprimento_estai_b = Range("Tab_zeq_estru_autop_estai[COMPRIMENTO ESTAI B (m)]").Rows(Repete).Value
+get_comprimento_estai_c = Range("Tab_zeq_estru_autop_estai[COMPRIMENTO ESTAI C (m)]").Rows(Repete).Value
+get_comprimento_estai_d = Range("Tab_zeq_estru_autop_estai[COMPRIMENTO ESTAI D (m)]").Rows(Repete).Value
+get_d_fundacao_mastro_id = Range("Tab_zeq_estru_autop_estai[FUNDAÇÃO MASTRO]").Rows(Repete).text
+get_d_fundacao_estai_a_id = Range("Tab_zeq_estru_autop_estai[FUNDAÇÃO ESTAI A]").Rows(Repete).text
+get_d_fundacao_estai_b_id = Range("Tab_zeq_estru_autop_estai[FUNDAÇÃO ESTAI B]").Rows(Repete).text
+get_d_fundacao_estai_c_id = Range("Tab_zeq_estru_autop_estai[FUNDAÇÃO ESTAI C]").Rows(Repete).text
+get_d_fundacao_estai_d_id = Range("Tab_zeq_estru_autop_estai[FUNDAÇÃO ESTAI D]").Rows(Repete).text
+get_desenho_fundacao_mastro = Range("Tab_zeq_estru_autop_estai[DESENHO FUNDAÇÃO MASTRO]").Rows(Repete).text
+get_desenho_fundacao_estai = Range("Tab_zeq_estru_autop_estai[DESENHO FUNDAÇÃO ESTAI]").Rows(Repete).text
+get_tipo_cabo_estai = Range("Tab_zeq_estru_autop_estai[TIPO CABO ESTAI]").Rows(Repete).text
+get_tracao_estai = Range("Tab_zeq_estru_autop_estai[TRAÇÃO ESTAI (kgf)]").Rows(Repete).Value
+
+
+Select Case get_extensao_mastro_a
+    Case "", "-": extensao_mastro_a = Null
+    Case Else: extensao_mastro_a = get_extensao_mastro_a
+End Select
+
+Select Case get_extensao_mastro_b
+    Case "", "-": extensao_mastro_b = Null
+    Case Else: extensao_mastro_b = get_extensao_mastro_b
+End Select
+
+Select Case get_comprimento_estai_a
+    Case "", "-": comprimento_estai_a = Null
+    Case Else: comprimento_estai_a = get_comprimento_estai_a
+End Select
+
+Select Case get_comprimento_estai_b
+    Case "", "-": comprimento_estai_b = Null
+    Case Else: comprimento_estai_b = get_comprimento_estai_b
+End Select
+
+Select Case get_comprimento_estai_c
+    Case "", "-": comprimento_estai_c = Null
+    Case Else: comprimento_estai_c = get_comprimento_estai_c
+End Select
+
+Select Case get_comprimento_estai_d
+    Case "", "-": comprimento_estai_d = Null
+    Case Else: comprimento_estai_d = get_comprimento_estai_d
+End Select
+
+Select Case get_d_fundacao_mastro_id
+    Case "", "-": d_fundacao_mastro_id = Null
+    Case "Engastada": d_fundacao_mastro_id = "EG"
+    Case "Grelha": d_fundacao_mastro_id = "GR"
+    Case "Estaqueada": d_fundacao_mastro_id = "ET"
+    Case "Tubulão": d_fundacao_mastro_id = "TB"
+    Case "Helicoidal": d_fundacao_mastro_id = "HE"
+    Case "Sapata": d_fundacao_mastro_id = "SP"
+    Case Else: d_fundacao_mastro_id = "Erro"
+End Select
+
+Select Case get_d_fundacao_estai_a_id
+    Case "", "-": d_fundacao_estai_a_id = Null
+    Case "Tirante": d_fundacao_estai_a_id = "TI"
+    Case "Grelha": d_fundacao_estai_a_id = "GR"
+    Case "Estaqueada": d_fundacao_estai_a_id = "ET"
+    Case "Tubulão": d_fundacao_estai_a_id = "TB"
+    Case "Helicoidal": d_fundacao_estai_a_id = "HE"
+    Case "Sapata": d_fundacao_estai_a_id = "SP"
+    Case "Engastada": d_fundacao_estai_a_id = "EG"
+    Case "Bloco": d_fundacao_estai_a_id = "BL"
+    Case Else: d_fundacao_estai_a_id = "Erro"
+End Select
+
+Select Case get_d_fundacao_estai_b_id
+    Case "", "-": d_fundacao_estai_b_id = Null
+    Case "Tirante": d_fundacao_estai_b_id = "TI"
+    Case "Grelha": d_fundacao_estai_b_id = "GR"
+    Case "Estaqueada": d_fundacao_estai_b_id = "ET"
+    Case "Tubulão": d_fundacao_estai_b_id = "TB"
+    Case "Helicoidal": d_fundacao_estai_b_id = "HE"
+    Case "Sapata": d_fundacao_estai_b_id = "SP"
+    Case "Engastada": d_fundacao_estai_b_id = "EG"
+    Case "Bloco": d_fundacao_estai_b_id = "BL"
+    Case Else: d_fundacao_estai_b_id = "Erro"
+End Select
+
+Select Case get_d_fundacao_estai_c_id
+    Case "", "-": d_fundacao_estai_c_id = Null
+    Case "Tirante": d_fundacao_estai_c_id = "TI"
+    Case "Grelha": d_fundacao_estai_c_id = "GR"
+    Case "Estaqueada": d_fundacao_estai_c_id = "ET"
+    Case "Tubulão": d_fundacao_estai_c_id = "TB"
+    Case "Helicoidal": d_fundacao_estai_c_id = "HE"
+    Case "Sapata": d_fundacao_estai_c_id = "SP"
+    Case "Engastada": d_fundacao_estai_c_id = "EG"
+    Case "Bloco": d_fundacao_estai_c_id = "BL"
+    Case Else: d_fundacao_estai_c_id = "Erro"
+End Select
+
+Select Case get_d_fundacao_estai_d_id
+    Case "", "-": d_fundacao_estai_d_id = Null
+    Case "Tirante": d_fundacao_estai_d_id = "TI"
+    Case "Grelha": d_fundacao_estai_d_id = "GR"
+    Case "Estaqueada": d_fundacao_estai_d_id = "ET"
+    Case "Tubulão": d_fundacao_estai_d_id = "TB"
+    Case "Helicoidal": d_fundacao_estai_d_id = "HE"
+    Case "Sapata": d_fundacao_estai_d_id = "SP"
+    Case "Engastada": d_fundacao_estai_d_id = "EG"
+    Case "Bloco": d_fundacao_estai_d_id = "BL"
+    Case Else: d_fundacao_estai_d_id = "Erro"
+End Select
+
+Select Case get_desenho_fundacao_mastro
+    Case "", "-": desenho_fundacao_mastro = Null
+    Case Else: desenho_fundacao_mastro = get_desenho_fundacao_mastro
+End Select
+
+Select Case get_desenho_fundacao_estai
+    Case "", "-": desenho_fundacao_estai = Null
+    Case Else: desenho_fundacao_estai = get_desenho_fundacao_estai
+End Select
+
+Select Case get_tipo_cabo_estai
+    Case "", "-": tipo_cabo_estai = Null
+    Case Else: tipo_cabo_estai = get_tipo_cabo_estai
+End Select
+
+Select Case get_tracao_estai
+    Case "", "-": tracao_estai = Null
+    Case Else: tracao_estai = get_tracao_estai
+End Select
+
+
+    Dim WinHttpReq As Object
+    Set WinHttpReq = CreateObject("WinHttp.WinHttpRequest.5.1")
+
+    WinHttpReq.Open "PUT", "http://apilevantamento.h2m.eng.br:3000/api/zeq_estru_estai_lt/" & ID, False
+    WinHttpReq.SetRequestHeader "Content-Type", "application/json"
+    WinHttpReq.SetRequestHeader "Authorization", Get_Token
+
+    Dim json As Object
+    Set json = CreateObject("Scripting.Dictionary")
+    
+        json("extensao_mastro_a") = extensao_mastro_a
+        json("extensao_mastro_b") = extensao_mastro_b
+        json("comprimento_estai_a") = comprimento_estai_a
+        json("comprimento_estai_b") = comprimento_estai_b
+        json("comprimento_estai_c") = comprimento_estai_c
+        json("comprimento_estai_d") = comprimento_estai_d
+        json("d_fundacao_mastro_id") = d_fundacao_mastro_id
+        json("d_fundacao_estai_a_id") = d_fundacao_estai_a_id
+        json("d_fundacao_estai_b_id") = d_fundacao_estai_b_id
+        json("d_fundacao_estai_c_id") = d_fundacao_estai_c_id
+        json("d_fundacao_estai_d_id") = d_fundacao_estai_d_id
+        json("desenho_fundacao_mastro") = desenho_fundacao_mastro
+        json("desenho_fundacao_estai") = desenho_fundacao_estai
+        json("tipo_cabo_estai") = tipo_cabo_estai
+        json("tracao_estai") = tracao_estai
+    
+    Dim jsonData As String
+    jsonData = JsonConverter.ConvertToJson(json)
+    
+    WinHttpReq.Send jsonData
+    
+    If InStr(1, WinHttpReq.ResponseText, "EDITADO(A) COM SUCESSO") = 0 Then
+        
+        If Qtde_Erros = "" Then
+            Qtde_Erros = 1
+        Else: Qtde_Erros = Qtde_Erros + 1
+        End If
+        
+        If OP_Erros = "" Then
+            OP_Erros = NumOP
+        Else: OP_Erros = OP_Erros & ", " & NumOP
+        End If
+        
+    End If
+
+
+Proximo:
+    Repete = Repete + 1
+
+
+Set extensao_mastro_a = Nothing
+Set extensao_mastro_b = Nothing
+Set comprimento_estai_a = Nothing
+Set comprimento_estai_b = Nothing
+Set comprimento_estai_c = Nothing
+Set comprimento_estai_d = Nothing
+Set d_fundacao_mastro_id = Nothing
+Set d_fundacao_estai_a_id = Nothing
+Set d_fundacao_estai_b_id = Nothing
+Set d_fundacao_estai_c_id = Nothing
+Set d_fundacao_estai_d_id = Nothing
+Set desenho_fundacao_mastro = Nothing
+Set desenho_fundacao_estai = Nothing
+Set tipo_cabo_estai = Nothing
+Set tracao_estai = Nothing
+
+
+Set WinHttpReq = Nothing
+Set json = Nothing
+
+Loop
+
+Application.ScreenUpdating = True
+
+TempoFim = Now()
+
+    If Qtde_Erros = "" Then
+        MsgLog = "Dados de " & APIAtual & " da LT " & CodLT & " enviados para o banco de dados com sucesso!" & Chr(13) & Chr(13) & _
+        "Total de torres: " & QtdeTorresEstai & _
         Chr(13) & Chr(13) & _
         "Tempo de execução: " & TimeValue(Format(TempoFim - TempoInicio, "dd/mm/yyyy hh:mm:ss"))
         
@@ -1289,12 +1711,8 @@ ActiveWorkbook.Save
     On Error GoTo 0
 
 If LoadAll = "1" Then
-    Call LoadToAPI_zeq_cadeia_isol
+Call LoadToAPI_zeq_cadeia_isol
 End If
-
-End Sub
-
-Sub LoadToAPI_zeq_estru_estai()
 
 End Sub
 
